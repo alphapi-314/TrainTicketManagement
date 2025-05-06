@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Railway Booking System! </title>
+</head>
+<body class="cancel">
+    <div class="form-box2">
+        <form action="/cancel" method="POST" class="form-inner">
+            <p>
+              <label for="pnr" >Enter PNR Number</label><br>
+              <input type="text" id="pnr" name="user_pnr" class="form-input">
+            </p>
+            <button class="submit-button" type="submit">Submit</button>
+        </form>  
+    </div>
+</body>
+</html>
