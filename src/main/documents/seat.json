@@ -1,0 +1,46 @@
+{
+  "trainNumber": 14120,
+  "trainName": "DDN KGM EXP",
+  "date": "2025-05-03",
+  "seatClass": "2AC",
+  "coach": "A2",
+  "berth": "Lower",
+  "seatNumber": 35,
+  "bookings": [
+    {
+      "from": "DEHRADUN",
+      "to": "HARIDWAR",
+      "status": 0
+    },
+    {
+      "from": "HARIDWAR",
+      "to": "NAJIBABAD",
+      "status": 0
+    },
+    {
+      "from": "NAJIBABAD",
+      "to": "MORADABAD",
+      "status": 0
+    },
+    {
+      "from": "MORADABAD",
+      "to": "RAMPUR",
+      "status": 0
+    },
+    {
+      "from": "RAMPUR",
+      "to": "RUDRAPUR",
+      "status": 0
+    },
+    {
+      "from": "RUDRAPUR",
+      "to": "HALDWANI",
+      "status": 0
+    },
+    {
+      "from": "HALDWANI",
+      "to": "KATHGODAM",
+      "status": 0
+    }
+  ]
+}

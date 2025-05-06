@@ -1,0 +1,18 @@
+{
+  "pnr": 2343133,
+  "name": "Shivraj Singh Negi",
+  "age": 19,
+  "gender": "male",
+  "bookTime": "2025-04-10T13:04:56",
+  "trainNumber": 14120,
+  "trainName": "DDN KGM EXP",
+  "startStation": "DEHRADUN",
+  "endStation": "HALDWANI",
+  "departureTime": "2025-04-11T23:30:00",
+  "arrivalTime": "2025-04-12T06:45:00",
+  "seatClass": "2AC",
+  "coach": "A2",
+  "berth": "Lower",
+  "seatNumber": 32,
+  "status": 1
+}

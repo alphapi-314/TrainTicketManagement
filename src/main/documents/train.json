@@ -1,0 +1,49 @@
+{
+  "trainNumber": 14120,
+  "trainName": "DDN KGM EXP",
+  "date": "2025-05-03",
+  "route": [
+    {
+      "stationName": "DEHRADUN",
+      "arrivalTime": null,
+      "departureTime": "2025-05-03T23:30:00"
+    },
+    {
+      "stationName": "HARIDWAR",
+      "arrivalTime": "2025-05-04T00:49:00",
+      "departureTime": "2025-05-04T00:59:00"
+    },
+    {
+      "stationName": "NAJIBABAD",
+      "arrivalTime": "2025-05-04T02:06:00",
+      "departureTime": "2025-05-04T02:11:00"
+    },
+    {
+      "stationName": "MORADABAD",
+      "arrivalTime": "2025-05-04T04:07:00",
+      "departureTime": "2025-05-04T04:15:00"
+    },
+    {
+      "stationName": "RAMPUR",
+      "arrivalTime": "2025-05-04T04:46:00",
+      "departureTime": "2025-05-04T04:48:00"
+    },
+    {
+      "stationName": "RUDRAPUR",
+      "arrivalTime": "2025-05-04T05:25:00",
+      "departureTime": "2025-05-04T05:30:00"
+    },
+    {
+      "stationName": "HALDWANI",
+      "arrivalTime": "2025-05-04T06:45:00",
+      "departureTime": "2025-05-04T06:50:00"
+    },
+    {
+      "stationName": "KATHGODAM",
+      "arrivalTime": "2025-05-04T07:10:00",
+      "departureTime": null
+    }
+  ],
+  "seatClasses": ["SL", "3AC", "2AC", "1AC"],
+  "coaches": ["HA1", "A1", "A2", "B1", "B2", "B3", "D1", "D2", "D3", "D4"]
+}
