@@ -9,32 +9,13 @@
     color:rgb(0, 0, 0) ;
     text-shadow: 1px 3px 5px rgba(170, 170, 170, 0.9);
 }
-.home-bg {
-    position: relative;
-    height: 100vh;
-    margin: 0; 
-    padding: 0; 
-}
-.home-bg::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-size: cover;
-    background-position: center;
-    background-image: url("/images/train.jpg"); 
-    filter: contrast(110%) grayscale(5%) opacity(1) saturate(110%);
-    z-index: -1;
-}
 .white-banner {
-    background-color: rgba(255, 255, 255); 
+    background-color: rgba(255, 255, 255);
     padding: 30px;
     color: black;
     position: relative;
     text-align: center;
-    z-index: 1; 
+    z-index: 1;
     width: 100%;
     opacity: 0.9;
     box-sizing: border-box;
@@ -45,14 +26,17 @@
     justify-content: center;
     margin-top: 80px;
 }
+
+
+
 .form-box2 {
-    width: 550px;
-    margin: auto;
-    padding: 65px;
-    background-color: #e7e7e7;
-    border-radius: 20px;
-    border: 3px solid #7a7a7a;
-    box-shadow: 0px 0px 10px rgb(90, 90, 90);
+    width: 600px;
+    background: rgba(227, 227, 227, 0.6);
+    backdrop-filter: blur(5px);
+    border-radius: 18px;
+    padding: 50px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8); /* horizontal vertical blur */
+    color: black;
 }
 .form-inner {
     display: flex;
@@ -62,124 +46,221 @@
 .form-inner p {
     width: 80%;
     margin-bottom: 1px;
-    text-align: left;  
+    text-align: left;
+}
+.form-text {
+    font-family: 'Poppins', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight:normal ;
+    font-size: 22px;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    color: rgb(30, 30, 30);
+    text-shadow: 1px 2px 4px rgba(150, 150, 150, 0.6);
+    opacity: 0.95;
 }
 .form-input {
     width: 100%;
-    padding: 8px;
+    padding: 10px 15px;
     margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 18px;
+    background-color: rgba(255, 255, 255, 0.8);
     box-sizing: border-box;
-}
-body.booking {
-    display: flex;             
-    justify-content: center;   
-    align-items: center; 
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    background-color: #96f599; 
-}
-body.show {
-    display: flex;             
-    justify-content: center;   
-    align-items: center; 
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    background-color: #edf57f; 
-}
-body.cancel {
-    display: flex;             
-    justify-content: center;   
-    align-items: center; 
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    background-color: #f38777;
-}
-body.upgrade {
-    display: flex;             
-    justify-content: center;   
-    align-items: center; 
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    background-color: #ed8df4;
-}
-body.reschedule {
-    display: flex;             
-    justify-content: center;   
-    align-items: center; 
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    background-color: #81b6fb;
+    font-size: 1rem;
+    transition: border 0.3s ease;
 }
 .submit-button {
     border: 2px solid #7a7a7a;
     font-size: medium;
     margin-top: 20px;
-    padding: 9px 20px ; 
-    background-color: #ffffff; 
-    color: rgb(0, 0, 0);       
-    border-radius: 5px;      
-    cursor:pointer;          
-    box-shadow: 0px 3px 6px rgba(128, 128, 128, 0.73);
+    padding: 9px 20px ;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border-radius: 18px;
+    cursor:pointer;
+    box-shadow: 0 3px 6px rgba(128, 128, 128, 0.73);
+}
+
+
+.home-bg {
+    margin: 0;
+    padding: 0;
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+}
+.home-bg::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: calc(100% + 20px);
+    height: calc(100% + 20px);
+    background-size: cover;
+    background-position: center;
+    background-image: url("/images/home_train.jpg");
+    filter: contrast(105%) opacity(0.7) saturate(95%) blur(3px);
+    z-index: -1;
+    pointer-events: none;
+}
+.book-bg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+}
+.book-bg::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("/images/book_train.jpg");
+    filter: grayscale(5%) blur(1px);
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+}
+.show-bg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+}
+.show-bg::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("/images/show_train.jpg");
+    filter: blur(1px) brightness(1.1) contrast(90%);
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+}
+.cancel-bg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+}
+.cancel-bg::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("/images/cancel_train.jpg");
+    filter: blur(1px) brightness(1.1) contrast(90%);
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+}
+.res-bg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+}
+.res-bg::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("/images/res_train.jpg");
+    filter: brightness(110%) blur(1px);
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+}
+
+
+body.upgrade {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-color: #ed8df4;
 }
 .text-2 {
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif ;
     font-weight:600 ;
-    font-size: 30px;         
+    font-size: 30px;
     text-align: center;
     text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.888);
 }
 .button1 {
-    opacity: 0.9;
+    opacity: 0.94;
     color: white;
     border: 2px solid #00905b;
-    padding: 20px 20px;    
-    background-color: #61cf65; 
-    border-radius: 10px;      
-    cursor:pointer ;          
-    box-shadow: 0px 1px 8px rgb(57, 57, 57);
+    padding: 20px 20px;
+    background-color: #61cf65;
+    border-radius: 10px;
+    cursor:pointer ;
+    box-shadow: 0 1px 8px rgb(57, 57, 57);
 }
 .button2 {
-    opacity: 0.9;
+    opacity: 0.94;
     color: white;
     border: 2px solid #ff1a1a;
-    padding: 20px 20px;    
-    background-color: #f57460; 
-    border-radius: 10px;      
-    cursor:pointer ;          
-    box-shadow: 0px 1px 8px rgb(57, 57, 57);
+    padding: 20px 20px;
+    background-color: #f57460;
+    border-radius: 10px;
+    cursor:pointer ;
+    box-shadow: 0 1px 8px rgb(57, 57, 57);
 }
 .button3 {
-    opacity: 0.9;
+    opacity: 0.94;
     color: white;
     border: 2px solid #00509b;
-    padding: 20px 20px;    
-    background-color: #4d99fc; 
-    border-radius: 10px;      
-    cursor:pointer ;          
-    box-shadow: 0px 1px 8px rgb(57, 57, 57);
+    padding: 20px 20px;
+    background-color: #4d99fc;
+    border-radius: 10px;
+    cursor:pointer ;
+    box-shadow: 0 1px 8px rgb(57, 57, 57);
 }
 .button4 {
-    opacity: 0.9;
+    opacity: 0.94;
     color: white;
     border: 2px solid #c4c800;
-    padding: 20px 20px;     
-    background-color: #e7f069; 
-    border-radius: 10px;      
-    cursor:pointer ;          
-    box-shadow: 0px 1px 8px rgb(57, 57, 57); 
+    padding: 20px 20px;
+    background-color: #e7f069;
+    border-radius: 10px;
+    cursor:pointer ;
+    box-shadow: 0 1px 8px rgb(57, 57, 57);
 }
 .button5 {
-    opacity: 0.9;
+    opacity: 0.94;
     color: white;
     border: 2px solid #6b0077;
-    padding: 20px 20px;       
-    background-color: #f56fff; 
-    border-radius: 10px;      
-    cursor:pointer ;          
-    box-shadow: 0px 1px 8px rgb(57, 57, 57); 
+    padding: 20px 20px;
+    background-color: #f56fff;
+    border-radius: 10px;
+    cursor:pointer ;
+    box-shadow: 0 1px 8px rgb(57, 57, 57);
 }

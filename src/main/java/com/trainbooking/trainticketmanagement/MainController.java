@@ -1,12 +1,11 @@
 package com.trainbooking.trainticketmanagement;
-
-
-import org.springframework.web.bind.annotation.RestController;
+import org.bson.Document;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
@@ -20,7 +19,7 @@ public class MainController {
         return "book";
     }
     @GetMapping("/show")
-    public String showTicketPage() {
+    public String pnrTicketPage() {
         return "show";
     }  
     @GetMapping("/reschedule")
@@ -35,14 +34,16 @@ public class MainController {
     public String cancelTicketPage() {
         return "cancel";
     }
-    @PostMapping("/book")
-    public String handleBooking(@RequestParam String user_source,
-                                @RequestParam String user_destination,
-                                @RequestParam String user_dot) {
-        return "redirect:/ticket-info";
+
+    User user=new User();
+    @PostMapping("/show")
+    public String handlePNRSubmission(@RequestParam Integer user_pnr, Model model) {  /* according to name int HTML file */
+        Document ticketDetails = user.show(user_pnr);
+        model.addAttribute("ticket", ticketDetails);
+        return "redirect:/ticket-show";
     }
-    @GetMapping("/ticket-info")
+    @GetMapping("/ticket-show")
     public String showTicketInfo() {
-        return "ticket-info";  // Make sure there's a ticket-info.html in the templates folder
-    }     
+        return "ticket-show";
+    }
 }
