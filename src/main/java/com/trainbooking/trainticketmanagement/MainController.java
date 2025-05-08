@@ -3,9 +3,6 @@ import org.bson.Document;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
-import org.springframework.stereotype.Controller;
 
 
 @Controller
@@ -35,7 +32,7 @@ public class MainController {
         return "cancel";
     }
 
-    User user=new User();
+    UserFunctions user = new UserFunctions();
     @PostMapping("/show")
     public String handlePNRSubmission(@RequestParam Integer user_pnr, Model model) {  /* according to name int HTML file */
         Document ticketDetails = user.show(user_pnr);

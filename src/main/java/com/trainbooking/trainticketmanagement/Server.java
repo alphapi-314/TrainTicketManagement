@@ -9,11 +9,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
-class Server {
-    private static final DbConnection obj = new DbConnection();
-    private static final MongoCollection<Document> ticketCollection = obj.connection("ticket");
-    private static final MongoCollection<Document> trainCollection = obj.connection("seats");
-    private static final MongoCollection<Document> userCollection = obj.connection("user");
+class Server implements DbConnection {
 
     protected Document loginAuthentication(String userName, String password){
         Bson filter = Filters.and(

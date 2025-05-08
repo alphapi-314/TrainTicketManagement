@@ -1,50 +1,49 @@
 package com.trainbooking.trainticketmanagement;
 
+import com.mongodb.client.model.Filters;
 import org.bson.Document;
-import java.time.*;
-import java.util.*;
+import org.bson.conversions.Bson;
 
-public class User extends Server {
+class User implements DbConnection {
+    String userName;
+    private final String password;
+    String emailID;
 
-    Document show(int pnr){
-        return findTicket(pnr);
+    User(String username, String emailID, String password) {
+        this.userName = username;
+        this.password = password;
+        this.emailID = emailID;
     }
 
-    void cancel(int pnr){
-        boolean flag = cancelTicket(pnr);
-        if (flag) {
-            System.out.println("Your ticket got cancelled");
-        }
-        else{
-            System.out.println("No ticket got cancelled");
-        }
+    User(String username, String password) {
+        this.userName = username;
+        this.password = password;
     }
 
-    void book(){
-
+    User(Document doc){
+        this.userName = doc.getString("userName");
+        this.password = doc.getString("password");
+        this.emailID = doc.getString("emailID");
     }
 
-    void reschedule(int pnr, LocalDate date){
-        Document ticket = findTicket(pnr);
-        if (ticket == null){
-            System.out.println("No ticket found");
-            return;
-        }
-
+    Document toDocument(){
+        return new Document("userName",userName)
+                .append("password",password)
+                .append("emailID",emailID);
     }
 
-    void upgrade(int pnr, String seatClass, String coach, String berth) {
-        Document ticket = findTicket(pnr);
-        if (ticket == null){
-            System.out.println("No ticket found");
-            return;
-        }
-        
-
+    void addUser(){
+        Document doc = this.toDocument();
+        userCollection.insertOne(doc);
     }
 
-    boolean login(String userName, String password){
-        Document user = loginAuthentication(userName, password);
-        return user != null;
+    Document getUser(){
+        Bson filter = Filters.and(
+                Filters.eq("userName", userName),
+                Filters.eq("password", password)
+        );
+
+        return userCollection.find(filter).first();
     }
+
 }

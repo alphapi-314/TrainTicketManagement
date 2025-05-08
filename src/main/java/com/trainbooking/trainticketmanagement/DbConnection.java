@@ -6,20 +6,15 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 
-class DbConnection {
+interface DbConnection {
 
-    private final String URI = "mongodb://localhost:27017";
-    private final MongoClient mongoClient = MongoClients.create(URI);
+    static final String URI = "mongodb://localhost:27017";
+    static final MongoClient mongoClient = MongoClients.create(URI);
+    static final MongoDatabase database = mongoClient.getDatabase("train");
+    static final MongoCollection<Document> trainCollection = database.getCollection("trains");
+    static final MongoCollection<Document> ticketCollection = database.getCollection("tickets");
+    static final MongoCollection<Document> seatCollection = database.getCollection("seats");
+    static final MongoCollection<Document> userCollection = database.getCollection("users");
 
-    MongoCollection<Document> connection(String collection) {
-        MongoDatabase db = mongoClient.getDatabase("train");
-        return db.getCollection(collection);
-    }
-
-    void closeConnection() {
-        if (mongoClient != null) {
-            mongoClient.close();
-            System.out.println("MongoDB connection closed.");
-        }
-    }
 }
+

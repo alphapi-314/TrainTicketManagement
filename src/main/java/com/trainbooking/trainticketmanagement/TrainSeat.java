@@ -1,5 +1,7 @@
 package com.trainbooking.trainticketmanagement;
 
+import org.bson.Document;
+
 import java.time.LocalDateTime;
 
 class TrainSeat extends Train {
@@ -16,6 +18,14 @@ class TrainSeat extends Train {
         this.coach = coach;
         this.berth = berth;
         this.seatNumber = seatNumber;
+    }
+
+    Document toDocument() {
+        return super.toDocument()
+                .append("seatClass", seatClass)
+                .append("coach", coach)
+                .append("berth", berth)
+                .append("seatNumber", seatNumber);
     }
 
 }

@@ -3,12 +3,10 @@ package com.trainbooking.trainticketmanagement;
 import com.mongodb.client.*;
 import org.bson.Document;
 
+import java.io.Serializable;
 
-public class Test {
+public class Test implements DbConnection {
     public static void main(String[] args) {
-        DbConnection obj = new DbConnection();
-        MongoCollection<Document> coll = obj.connection("ticket");
-
         Document doc = new Document();
         doc.append("name", "Shiv");
         doc.append("pnr", 1234);
@@ -20,12 +18,9 @@ public class Test {
         doc.append("start", "dehradun");
         doc.append("end", "haldwani");
 
-        coll.insertOne(doc);
+        ticketCollection.insertOne(doc);
 
         System.out.println("Inserted success");
-
-        obj.closeConnection();
-
 
     }
 }
