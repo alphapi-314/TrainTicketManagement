@@ -11,11 +11,13 @@
 }
 .white-banner {
     background-color: rgba(255, 255, 255);
+    top: 0;
+    left: 0;
     padding: 30px;
     color: black;
-    position: relative;
+    position: fixed;
     text-align: center;
-    z-index: 1;
+    z-index: 10;
     width: 100%;
     opacity: 0.9;
     box-sizing: border-box;
@@ -31,11 +33,11 @@
 
 .form-box2 {
     width: 600px;
-    background: rgba(227, 227, 227, 0.6);
-    backdrop-filter: blur(5px);
-    border-radius: 18px;
-    padding: 50px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8); /* horizontal vertical blur */
+    background: rgba(181, 181, 181, 0.7);
+    backdrop-filter: blur(4px);
+    border-radius: 25px;
+    padding: 60px;
+    box-shadow: 0 0px 20px rgba(42, 67, 44, 0.8); /* horizontal vertical blur */
     color: black;
 }
 .form-inner {
@@ -44,14 +46,14 @@
     align-items: center;
 }
 .form-inner p {
-    width: 80%;
+    width: 75%;
     margin-bottom: 1px;
-    text-align: left;
+    text-align: left ;
 }
 .form-text {
     font-family: 'Poppins', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-weight:normal ;
-    font-size: 22px;
+    font-weight: normal ;
+    font-size: 20px;
     text-align: center;
     margin-top: 10px;
     margin-bottom: 15px;
@@ -83,16 +85,19 @@
 }
 
 
+
+
 .home-bg {
     margin: 0;
-    padding: 0;
+    padding: 20px 0;
     position: relative;
     height: 100vh;
-    overflow: hidden;
+    overflow: auto;
+    box-sizing: border-box;
 }
 .home-bg::before {
     content: "";
-    position: absolute;
+    position: fixed;
     top: -10px;
     left: -10px;
     width: calc(100% + 20px);
@@ -100,7 +105,7 @@
     background-size: cover;
     background-position: center;
     background-image: url("/images/home_train.jpg");
-    filter: contrast(105%) opacity(0.7) saturate(95%) blur(3px);
+    filter: blur(7px) brightness(105%);
     z-index: -1;
     pointer-events: none;
 }
@@ -108,21 +113,21 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0;
-    padding: 0;
     position: relative;
     height: 100vh;
     overflow: hidden;
+    background-size: cover;
+    background-position: center;
 }
 .book-bg::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: -20px;
+    left: -20px;
+    width: calc(100% + 40px);
+    height: calc(100% + 40px);
     background-image: url("/images/book_train.jpg");
-    filter: grayscale(5%) blur(1px);
+    filter: grayscale(10%) blur(4px) brightness(95%);
     background-size: cover;
     background-position: center;
     z-index: -1;
@@ -131,21 +136,21 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0;
-    padding: 0;
     position: relative;
     height: 100vh;
     overflow: hidden;
+    background-size: cover;
+    background-position: center;
 }
 .show-bg::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: -20px;
+    left: -20px;
+    width: calc(100% + 40px);
+    height: calc(100% + 40px);
     background-image: url("/images/show_train.jpg");
-    filter: blur(1px) brightness(1.1) contrast(90%);
+    filter: grayscale(10%) blur(4px) brightness(95%);
     background-size: cover;
     background-position: center;
     z-index: -1;
@@ -154,21 +159,44 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0;
-    padding: 0;
     position: relative;
     height: 100vh;
     overflow: hidden;
+    background-size: cover;
+    background-position: center;
 }
 .cancel-bg::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: -20px;
+    left: -20px;
+    width: calc(100% + 40px);
+    height: calc(100% + 40px);
     background-image: url("/images/cancel_train.jpg");
-    filter: blur(1px) brightness(1.1) contrast(90%);
+    filter: grayscale(10%) blur(4px) brightness(95%);
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+}
+.upg-bg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+}
+.upg-bg::before {
+    content: "";
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    width: calc(100% + 40px);
+    height: calc(100% + 40px);
+    background-image: url("/images/upgrade_train.jpg");
+    filter: grayscale(10%) blur(4px) brightness(95%);
     background-size: cover;
     background-position: center;
     z-index: -1;
@@ -177,36 +205,28 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0;
-    padding: 0;
     position: relative;
     height: 100vh;
     overflow: hidden;
+    background-size: cover;
+    background-position: center;
 }
 .res-bg::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: -20px;
+    left: -20px;
+    width: calc(100% + 40px);
+    height: calc(100% + 40px);
     background-image: url("/images/res_train.jpg");
-    filter: brightness(110%) blur(1px);
+    filter: grayscale(10%) blur(4px) brightness(95%);
     background-size: cover;
     background-position: center;
     z-index: -1;
 }
 
 
-body.upgrade {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    background-color: #ed8df4;
-}
+
 .text-2 {
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif ;
     font-weight:600 ;
@@ -218,6 +238,7 @@ body.upgrade {
     opacity: 0.94;
     color: white;
     border: 2px solid #00905b;
+    margin-top: 100px;
     padding: 20px 20px;
     background-color: #61cf65;
     border-radius: 10px;
