@@ -1,5 +1,5 @@
 package com.trainbooking.trainticketmanagement;
-import org.bson.Document;
+import java.util.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,10 +32,9 @@ public class MainController {
         return "cancel";
     }
 
-    UserFunctions user = new UserFunctions();
-    @PostMapping("/show")
-    public String handlePNRSubmission(@RequestParam Integer user_pnr, Model model) {  /* according to name int HTML file */
-        Document ticketDetails = user.show(user_pnr);
+    @PostMapping("/showTicket")
+    public String handlePNRSubmission(@RequestParam Integer user_pnr, Model model) {
+        Map<String,Object> ticketDetails = UserFunctions.showTicket(user_pnr);
         model.addAttribute("ticket", ticketDetails);
         return "redirect:/ticket-show";
     }

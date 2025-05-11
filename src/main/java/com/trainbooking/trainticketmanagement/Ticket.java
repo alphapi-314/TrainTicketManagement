@@ -1,13 +1,16 @@
 package com.trainbooking.trainticketmanagement;
 
+import com.mongodb.client.model.Filters;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 import java.time.LocalDateTime;
+import java.util.*;
 
-class Ticket extends TrainSeat {
+class Ticket extends TrainSeat implements DbConnection {
     String name;
     int age;
-    char gender;
+    String gender;
     LocalDateTime bookTime;
     int pnr;
     int status;
@@ -15,7 +18,7 @@ class Ticket extends TrainSeat {
     Ticket(int trainNumber, String trainName, String startStation, String endStation,
                   LocalDateTime departureTime, LocalDateTime arrivalTime,
                   String seatClass, String coach, String berth, int seatNumber,
-                  String name, int age, char gender, LocalDateTime bookTime, int pnr, int status) {
+                  String name, int age, String gender, LocalDateTime bookTime, int pnr, int status) {
 
         super(trainNumber, trainName, startStation, endStation,
                 departureTime, arrivalTime, seatClass, coach, berth, seatNumber);
@@ -49,7 +52,21 @@ class Ticket extends TrainSeat {
                 .append("status", status);
     }
 
+    void addTicket(){
+        Document ticket = this.toDocument();
+        ticketCollection.insertOne(ticket);
+    }
 
+    static Map<String, Object> getTicket(int pnr) {
+        Bson filter = Filters.eq("pnr", pnr);
+        Document doc = ticketCollection.find(filter).first();
 
+        if (doc != null) {
+            doc.remove("_id");
+            return new LinkedHashMap<>(doc);
+        } else {
+            return Collections.emptyMap();
+        }
+    }
 
 }

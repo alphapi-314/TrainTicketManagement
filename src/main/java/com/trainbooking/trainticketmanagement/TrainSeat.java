@@ -1,10 +1,12 @@
 package com.trainbooking.trainticketmanagement;
 
+import com.mongodb.client.model.Filters;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 import java.time.LocalDateTime;
 
-class TrainSeat extends Train {
+class TrainSeat extends Train implements DbConnection {
     String seatClass;
     String coach;
     String berth;

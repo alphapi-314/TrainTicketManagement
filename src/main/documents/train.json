@@ -1,46 +1,46 @@
 {
   "trainNumber": 14120,
   "trainName": "DDN KGM EXP",
-  "date": "2025-05-03",
+  "date": "2025-05-08",
   "route": [
     {
       "stationName": "DEHRADUN",
       "arrivalTime": null,
-      "departureTime": "2025-05-03T23:30:00"
+      "departureTime": "2025-05-08T23:30:00"
     },
     {
       "stationName": "HARIDWAR",
-      "arrivalTime": "2025-05-04T00:49:00",
-      "departureTime": "2025-05-04T00:59:00"
+      "arrivalTime": "2025-05-09T00:49:00",
+      "departureTime": "2025-05-09T00:59:00"
     },
     {
       "stationName": "NAJIBABAD",
-      "arrivalTime": "2025-05-04T02:06:00",
-      "departureTime": "2025-05-04T02:11:00"
+      "arrivalTime": "2025-05-09T02:06:00",
+      "departureTime": "2025-05-09T02:11:00"
     },
     {
       "stationName": "MORADABAD",
-      "arrivalTime": "2025-05-04T04:07:00",
-      "departureTime": "2025-05-04T04:15:00"
+      "arrivalTime": "2025-05-09T04:07:00",
+      "departureTime": "2025-05-09T04:15:00"
     },
     {
       "stationName": "RAMPUR",
-      "arrivalTime": "2025-05-04T04:46:00",
-      "departureTime": "2025-05-04T04:48:00"
+      "arrivalTime": "2025-05-09T04:46:00",
+      "departureTime": "2025-05-09T04:48:00"
     },
     {
       "stationName": "RUDRAPUR",
-      "arrivalTime": "2025-05-04T05:25:00",
-      "departureTime": "2025-05-04T05:30:00"
+      "arrivalTime": "2025-05-09T05:25:00",
+      "departureTime": "2025-05-09T05:30:00"
     },
     {
       "stationName": "HALDWANI",
-      "arrivalTime": "2025-05-04T06:45:00",
-      "departureTime": "2025-05-04T06:50:00"
+      "arrivalTime": "2025-05-09T06:45:00",
+      "departureTime": "2025-05-09T06:50:00"
     },
     {
       "stationName": "KATHGODAM",
-      "arrivalTime": "2025-05-04T07:10:00",
+      "arrivalTime": "2025-05-09T07:10:00",
       "departureTime": null
     }
   ],

@@ -4,6 +4,8 @@ import com.mongodb.client.model.Filters;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
+import java.util.Map;
+
 class User implements DbConnection {
     String userName;
     private final String password;
@@ -37,13 +39,13 @@ class User implements DbConnection {
         userCollection.insertOne(doc);
     }
 
-    Document getUser(){
+    static boolean getUser(String userName, String password) {
         Bson filter = Filters.and(
                 Filters.eq("userName", userName),
                 Filters.eq("password", password)
         );
 
-        return userCollection.find(filter).first();
+        return userCollection.find(filter).first() != null;
     }
 
 }

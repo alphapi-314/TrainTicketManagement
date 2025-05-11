@@ -1,13 +1,24 @@
 package com.trainbooking.trainticketmanagement;
 
+import com.mongodb.client.MongoClient;
 import org.bson.Document;
 import java.time.*;
 import java.util.*;
 
-public class UserFunctions extends Server {
+class UserFunctions extends Server {
 
-    Document show(int pnr){
-        return findTicket(pnr);
+    private UserFunctions() {}
+
+    static Map<String,Object> showTicket(int pnr){
+        return Ticket.getTicket(pnr);
+    }
+
+    static List<Map<String,Object>> showTrains(String startStation, String endStation, LocalDate date){
+        return Train.getTrains(startStation, endStation, date);
+    }
+
+    static boolean login(String userName, String password){
+        return User.getUser(userName, password);
     }
 
     void cancel(int pnr){
@@ -40,11 +51,6 @@ public class UserFunctions extends Server {
             return;
         }
 
-
     }
 
-    boolean login(String userName, String password){
-        Document user = loginAuthentication(userName, password);
-        return user != null;
-    }
 }

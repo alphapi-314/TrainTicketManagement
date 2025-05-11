@@ -11,15 +11,6 @@ import java.util.*;
 
 class Server implements DbConnection {
 
-    protected Document loginAuthentication(String userName, String password){
-        Bson filter = Filters.and(
-                Filters.eq("userName", userName),
-                Filters.eq("password", password)
-        );
-
-        return userCollection.find(filter).first();
-    }
-
     protected Document createTicket() {
         Document doc = new Document();
         doc.append("a","b");
