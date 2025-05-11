@@ -1,6 +1,5 @@
 package com.trainbooking.trainticketmanagement;
 
-import com.mongodb.client.MongoClient;
 import org.bson.Document;
 import java.time.*;
 import java.util.*;
@@ -19,6 +18,11 @@ class UserFunctions extends Server {
 
     static boolean login(String userName, String password){
         return User.getUser(userName, password);
+    }
+
+    static void registerUser(String userName, String emailID, String password){
+        User user = new User(userName, emailID, password);
+        user.addUser();
     }
 
     void cancel(int pnr){
@@ -41,7 +45,6 @@ class UserFunctions extends Server {
             System.out.println("No ticket found");
             return;
         }
-
     }
 
     void upgrade(int pnr, String seatClass, String coach, String berth) {
