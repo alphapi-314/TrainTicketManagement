@@ -1,23 +1,35 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ticket Details</title>
 </head>
 <body>
-    <h1> Ticket Details!</h1>
-    <div>
-      <p>Ticket ID: <span th:text="${ticket.getObjectId('_id')}"></span></p>
-      <p>Name: <span th:text="${ticket.getString('name')}"></span></p>
-      <p>PNR: <span th:text="${ticket.getInteger('pnr')}"></span></p>
-      <p>Train Number: <span th:text="${ticket.getInteger('train_number')}"></span></p>
-      <p>Seat Class: <span th:text="${ticket.getString('seat class')}"></span></p>
-      <p>Coach Number: <span th:text="${ticket.getString('coach number')}"></span></p>
-      <p>Seat Number: <span th:text="${ticket.getInteger('seat number')}"></span></p>
-      <p>Berth Type: <span th:text="${ticket.getString('berth type')}"></span></p>
-      <p>Source: <span th:text="${ticket.getString('start')}"></span></p>
-      <p>Destination: <span th:text="${ticket.getString('end')}"></span></p>
-    </div>
+<div class="ticket-show-bg">
+  <div class="ticket-container">
+    <p>PNR: <span th:text="${ticket['pnr']}"></span></p>
+    <p>Name: <span th:text="${ticket['name']}"></span></p>
+    <p>Age: <span th:text="${ticket['age']}"></span></p>
+    <p>Gender: <span th:text="${ticket['gender']}"></span></p>
+    <p>Booking Time: <span th:text="${ticket['bookTime']}"></span></p>
+    <p>Train Number: <span th:text="${ticket['trainNumber']}"></span></p>
+    <p>Train Name: <span th:text="${ticket['trainName']}"></span></p>
+    <p>Start Station: <span th:text="${ticket['startStation']}"></span></p>
+    <p>End Station: <span th:text="${ticket['endStation']}"></span></p>
+    <p>Departure Time: <span th:text="${ticket['departureTime']}"></span></p>
+    <p>Arrival Time: <span th:text="${ticket['arrivalTime']}"></span></p>
+    <p>Seat Class: <span th:text="${ticket['seatClass']}"></span></p>
+    <p>Coach: <span th:text="${ticket['coach']}"></span></p>
+    <p>Berth: <span th:text="${ticket['berth']}"></span></p>
+    <p>Seat Number: <span th:text="${ticket['seatNumber']}"></span></p>
+    <p>Status:
+      <span th:if="${ticket['status'] == 1}" th:text="'Booked'"></span>
+      <span th:if="${ticket['status'] == 0}" th:text="'Not Booked'"></span>
+      <span th:if="${ticket['status'] == -1}" th:text="'Waiting List'"></span>
+    </p>
+  </div>
+</div>
 </body>
 </html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Railway Booking System</title>
+</head>
+<body class="book-bg">
+<div class="form-box2">
+    <form action="/book-final" method="POST" class="form-inner">
+        <p>
+            <label for="name" class="form-text">Name</label><br>
+            <input type="text" id="name" name="user_name" class="form-input" required>
+        </p>
+        <p>
+            <label for="gender" class="form-text">Gender</label><br>
+            <input type="text" id="gender" name="user_gender" class="form-input" required>
+        </p>
+        <p>
+            <label for="age" class="form-text">Age</label><br>
+            <input type="number" id="age" name="user_age" class="form-input" required>
+        </p>
+        <button class="submit-button" type="submit">SUBMIT</button>
+    </form>
+</div>
+</body>
+</html>

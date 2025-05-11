@@ -31,14 +31,67 @@
 
 
 
+.train-book-bg {
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 100vh;
+    gap: 25px;
+}
+.train-book-bg::before {
+    content: "";
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    width: calc(100% + 40px);
+    height: calc(100% + 40px);
+    background-image: url("/images/book_train.jpg");
+    filter: grayscale(10%) blur(4px) brightness(95%);
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+}
+.class-box {
+    background-color: #ffffff;
+    padding: 10px 10px;
+    border-radius: 15px;
+    text-align: center;
+    border: 2px solid #009503;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.class-box button {
+    padding: 10px 15px;
+    background-color: #30c800;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.class-box button:hover {
+    background-color: #009c03;
+}
+.class-box-text {
+    font-family: 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif ;
+    font-weight:bolder ;
+    font-size: 22px;
+}
+
+
+
+
 .form-box2 {
     width: 600px;
     background: rgba(181, 181, 181, 0.7);
-    backdrop-filter: blur(4px);
+    backdrop-filter: blur(5px);
     border-radius: 25px;
     padding: 60px;
-    box-shadow: 0 0px 20px rgba(42, 67, 44, 0.8); /* horizontal vertical blur */
+    box-shadow: 0 0px 20px rgba(104, 104, 104, 0.8); /* horizontal vertical blur */
     color: black;
+    border: 1px solid rgba(255, 255, 255, 190%);
 }
 .form-inner {
     display: flex;
@@ -47,30 +100,26 @@
 }
 .form-inner p {
     width: 75%;
-    margin-bottom: 1px;
+    margin-bottom: 5px;
     text-align: left ;
 }
 .form-text {
     font-family: 'Poppins', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-weight: normal ;
-    font-size: 20px;
+    font-size: 22px;
     text-align: center;
-    margin-top: 10px;
-    margin-bottom: 15px;
     color: rgb(30, 30, 30);
     text-shadow: 1px 2px 4px rgba(150, 150, 150, 0.6);
     opacity: 0.95;
 }
 .form-input {
     width: 100%;
-    padding: 10px 15px;
-    margin-top: 10px;
+    padding: 10px;
+    margin-top: 15px;
     border: 1px solid #ccc;
     border-radius: 18px;
     background-color: rgba(255, 255, 255, 0.8);
     box-sizing: border-box;
-    font-size: 1rem;
-    transition: border 0.3s ease;
 }
 .submit-button {
     border: 2px solid #7a7a7a;
@@ -83,7 +132,9 @@
     cursor:pointer;
     box-shadow: 0 3px 6px rgba(128, 128, 128, 0.73);
 }
-
+.submit-button:hover {
+    background-color: #7a7a7a;
+}
 
 
 
@@ -128,6 +179,39 @@
     height: calc(100% + 40px);
     background-image: url("/images/book_train.jpg");
     filter: grayscale(10%) blur(4px) brightness(95%);
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+}
+.ticket-container {
+    background-color: #ffffff;
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 600px;
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
+    z-index: 1;
+}
+.ticket-show-bg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    min-height: 100vh;
+    padding: 20px;
+    z-index: 0;
+}
+.ticket-show-bg::before {
+    content: "";
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    width: calc(100% + 40px);
+    height: calc(100% + 40px);
+    background-image: url("/images/show_train.jpg");
+    filter: grayscale(15%) blur(3px) brightness(85%);
     background-size: cover;
     background-position: center;
     z-index: -1;
@@ -230,9 +314,9 @@
 .text-2 {
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif ;
     font-weight:600 ;
-    font-size: 30px;
+    font-size: 32px;
     text-align: center;
-    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.888);
+    text-shadow: 0 2px 3px rgba(0, 0, 0, 0.888);
 }
 .button1 {
     opacity: 0.94;
@@ -243,7 +327,7 @@
     background-color: #61cf65;
     border-radius: 10px;
     cursor:pointer ;
-    box-shadow: 0 1px 8px rgb(57, 57, 57);
+    box-shadow: 0 1px 10px rgb(23, 23, 23);
 }
 .button2 {
     opacity: 0.94;
@@ -253,7 +337,7 @@
     background-color: #f57460;
     border-radius: 10px;
     cursor:pointer ;
-    box-shadow: 0 1px 8px rgb(57, 57, 57);
+    box-shadow: 0 1px 10px rgb(23, 23, 23);
 }
 .button3 {
     opacity: 0.94;
@@ -263,17 +347,17 @@
     background-color: #4d99fc;
     border-radius: 10px;
     cursor:pointer ;
-    box-shadow: 0 1px 8px rgb(57, 57, 57);
+    box-shadow: 0 1px 10px rgb(23, 23, 23);
 }
 .button4 {
     opacity: 0.94;
     color: white;
     border: 2px solid #c4c800;
     padding: 20px 20px;
-    background-color: #e7f069;
+    background-color: #d9e360;
     border-radius: 10px;
     cursor:pointer ;
-    box-shadow: 0 1px 8px rgb(57, 57, 57);
+    box-shadow: 0 1px 10px rgb(23, 23, 23);
 }
 .button5 {
     opacity: 0.94;
@@ -283,5 +367,5 @@
     background-color: #f56fff;
     border-radius: 10px;
     cursor:pointer ;
-    box-shadow: 0 1px 8px rgb(57, 57, 57);
+    box-shadow: 0 1px 10px rgb(23, 23, 23);
 }
