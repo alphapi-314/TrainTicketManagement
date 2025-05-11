@@ -32,7 +32,6 @@ class Server implements DbConnection {
             return true;
         }
         else {
-
             String seatClass = ticket.getString("seatClass");
             String berth = ticket.getString("berth");
             int seatNumber = ticket.getInteger("seatNumber");

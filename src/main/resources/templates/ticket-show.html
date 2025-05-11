@@ -7,17 +7,30 @@
 </head>
 <body>
     <h1> Ticket Details!</h1>
-    <div>
-      <p>Ticket ID: <span th:text="${ticket.getObjectId('_id')}"></span></p>
-      <p>Name: <span th:text="${ticket.getString('name')}"></span></p>
-      <p>PNR: <span th:text="${ticket.getInteger('pnr')}"></span></p>
-      <p>Train Number: <span th:text="${ticket.getInteger('train_number')}"></span></p>
-      <p>Seat Class: <span th:text="${ticket.getString('seat class')}"></span></p>
-      <p>Coach Number: <span th:text="${ticket.getString('coach number')}"></span></p>
-      <p>Seat Number: <span th:text="${ticket.getInteger('seat number')}"></span></p>
-      <p>Berth Type: <span th:text="${ticket.getString('berth type')}"></span></p>
-      <p>Source: <span th:text="${ticket.getString('start')}"></span></p>
-      <p>Destination: <span th:text="${ticket.getString('end')}"></span></p>
+    <div th:if="${ticket != null}">
+      <p><strong>PNR:</strong> <span th:text="${ticket.pnr}"></span></p>
+      <p><strong>Name:</strong> <span th:text="${ticket.name}"></span></p>
+      <p><strong>Age:</strong> <span th:text="${ticket.age}"></span></p>
+      <p><strong>Gender:</strong> <span th:text="${ticket.gender}"></span></p>
+      <p><strong>Train Number:</strong> <span th:text="${ticket.trainNumber}"></span></p>
+      <p><strong>Train Name:</strong> <span th:text="${ticket.trainName}"></span></p>
+      <p><strong>From:</strong> <span th:text="${ticket.startStation}"></span></p>
+      <p><strong>To:</strong> <span th:text="${ticket.endStation}"></span></p>
+      <p><strong>Departure:</strong> <span th:text="${ticket.departureTime}"></span></p>
+      <p><strong>Arrival:</strong> <span th:text="${ticket.arrivalTime}"></span></p>
+      <p><strong>Seat Class:</strong> <span th:text="${ticket.seatClass}"></span></p>
+      <p><strong>Coach Number:</strong> <span th:text="${ticket.coach}"></span></p>
+      <p><strong>Seat Number:</strong> <span th:text="${ticket.seatNumber}"></span></p>
+      <p><strong>Seat Berth:</strong> <span th:text="${ticket.berth}"></span></p>
+      <p><strong>Booking Status:</strong>
+        <span th:if="${ticket.status == 1}" th:text="'Booked'"></span>
+        <span th:if="${ticket.status == 0}" th:text="'Waitlisted'"></span>
+        <span th:if="${ticket.status == -1}" th:text="'Cancelled'"></span>
+      </p>
+
+    </div>
+    <div th:if="${ticket == null}">
+      <p>No ticket found for this PNR.</p>
     </div>
 </body>
 </html>
