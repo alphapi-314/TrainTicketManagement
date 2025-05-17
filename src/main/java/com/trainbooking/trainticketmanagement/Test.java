@@ -38,9 +38,10 @@ public class Test implements DbConnection {
         LocalDateTime bookTime = LocalDateTime.now();
         LocalDateTime dep = LocalDateTime.parse("2025-05-06T23:30:00");
         LocalDateTime arr = LocalDateTime.parse("2025-05-07T04:07:00");
+        LocalDate date = LocalDate.parse("2025-05-08");
 
         Ticket t = new Ticket(14120, "DDN KGM EXP", "DEHRADUN", "MORADABAD",
-                dep,arr, "3AC", "B2", "Upper", 12,
+                dep,arr, date, "3AC", "B2", "Upper", 12,
                 "Gaurav", 20, "male", bookTime, 34523, 1 );
         t.addTicket();
         System.out.println("Ticket add success");

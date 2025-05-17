@@ -13,18 +13,15 @@ class Train implements DbConnection {
     String endStation;
     LocalDateTime departureTime;
     LocalDateTime arrivalTime;
+    LocalDate date;
 
-    Train(int trainNo, String name, String start, String end, LocalDateTime departure, LocalDateTime arrival) {
+    Train(int trainNo, String name, String start, String end, LocalDateTime departure, LocalDateTime arrival, LocalDate date) {
         this.trainNumber = trainNo;
         this.trainName = name;
         this.startStation = start;
         this.endStation = end;
         this.departureTime = departure;
         this.arrivalTime = arrival;
-    }
-
-    Train(Train other) {
-        this(other.trainNumber, other.trainName, other.startStation, other.endStation, other.departureTime, other.arrivalTime);
     }
 
     Train(Document doc) {
@@ -34,6 +31,7 @@ class Train implements DbConnection {
         this.endStation = doc.getString("endStation");
         this.departureTime = doc.get("departureTime", LocalDateTime.class);
         this.arrivalTime = doc.get("arrivalTime", LocalDateTime.class);
+        this.date = doc.get("date", LocalDate.class);
     }
 
     Document toDocument() {
@@ -42,7 +40,8 @@ class Train implements DbConnection {
                 .append("startStation", startStation)
                 .append("endStation", endStation)
                 .append("departureTime", departureTime)
-                .append("arrivalTime", arrivalTime);
+                .append("arrivalTime", arrivalTime)
+                .append("date", date);
     }
 
     private static List<Document> fetchTrains(String startStation, String endStation, LocalDate date) {
@@ -77,7 +76,7 @@ class Train implements DbConnection {
         return trainCollection.aggregate(pipeline).into(new ArrayList<>());
     }
 
-    public static List<Map<String, Object>> getTrains(String startStation, String endStation, LocalDate date) {
+    static List<Map<String, Object>> getTrains(String startStation, String endStation, LocalDate date) {
         List<Document> trains = fetchTrains(startStation, endStation, date);
         List<Map<String, Object>> result = new ArrayList<>();
 

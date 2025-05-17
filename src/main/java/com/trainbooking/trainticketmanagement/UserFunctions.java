@@ -1,10 +1,9 @@
 package com.trainbooking.trainticketmanagement;
 
-import org.bson.Document;
 import java.time.*;
 import java.util.*;
 
-class UserFunctions extends Server {
+class UserFunctions {
 
     private UserFunctions() {}
 
@@ -25,14 +24,8 @@ class UserFunctions extends Server {
         user.addUser();
     }
 
-    void cancel(int pnr){
-        boolean flag = cancelTicket(pnr);
-        if (flag) {
-            System.out.println("Your ticket got cancelled");
-        }
-        else{
-            System.out.println("No ticket got cancelled");
-        }
+    String cancelTicket(int pnr){
+        return Ticket.cancelTicket(pnr);
     }
 
     void book(){
@@ -40,15 +33,11 @@ class UserFunctions extends Server {
     }
 
     void reschedule(int pnr, LocalDate date){
-        Document ticket = findTicket(pnr);
-        if (ticket == null){
-            System.out.println("No ticket found");
-            return;
-        }
+        Map<String,Object> ticket = Ticket.getTicket(pnr);
     }
 
     void upgrade(int pnr, String seatClass, String coach, String berth) {
-        Document ticket = findTicket(pnr);
+        Map<String,Object> ticket = Ticket.getTicket(pnr);
         if (ticket == null){
             System.out.println("No ticket found");
             return;

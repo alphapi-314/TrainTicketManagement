@@ -4,8 +4,6 @@ import com.mongodb.client.model.Filters;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
-import java.util.Map;
-
 class User implements DbConnection {
     String userName;
     private final String password;
@@ -15,17 +13,6 @@ class User implements DbConnection {
         this.userName = username;
         this.password = password;
         this.emailID = emailID;
-    }
-
-    User(String username, String password) {
-        this.userName = username;
-        this.password = password;
-    }
-
-    User(Document doc){
-        this.userName = doc.getString("userName");
-        this.password = doc.getString("password");
-        this.emailID = doc.getString("emailID");
     }
 
     Document toDocument(){

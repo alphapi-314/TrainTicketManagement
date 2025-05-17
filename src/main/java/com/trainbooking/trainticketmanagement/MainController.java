@@ -62,6 +62,8 @@ public class MainController {
     @PostMapping("/submit-show")
     public String handlePNRSubmission(@RequestParam Integer user_pnr, Model model) {
         Map<String, Object> ticketDetails = UserFunctions.showTicket(user_pnr);
+        boolean found = ticketDetails != null;
+        model.addAttribute("found", found);
         model.addAttribute("ticket", ticketDetails);
         return "ticket-show";
     }
