@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta charset="UTF-8">
+    <title>Register - Railway Booking System</title>
+</head>
+<body class="home-bg">
+<div class="login-container">
+    <div class="form-login">
+        <form action="/register" method="POST" class="form-login-inner" autocomplete="off">
+            <p>
+                <label for="username" class="form-text">Name:</label>
+                <input type="text" id="username" name="username" class="form-input" required th:value="${''}">
+            </p>
+            <p>
+                <label for="email" class="form-text">Email:</label>
+                <input type="email" id="email" name="email" class="form-input" pattern="[a-zA-Z0-9._%+-]+@gmail\.com" required th:value="${''}">
+            </p>
+            <p>
+                <label for="password" class="form-text">Password:</label>
+                <input type="password" id="password" name="password" class="form-input" required th:value="${''}">
+            </p>
+            <button class="submit-button form-text" class="submit-button">REGISTER</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

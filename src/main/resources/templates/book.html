@@ -8,7 +8,7 @@
 </head>
 <body class="book-bg">
 <div class="form-box2">
-    <form action="/class-select" method="POST" class="form-inner">
+    <form action="/class-select" method="POST" class="form-inner" autocomplete="off">
         <p>
             <label for="source" class="form-text">Source</label><br>
             <input type="text" id="source" name="user_source" class="form-input" required>
@@ -21,7 +21,7 @@
             <label for="dot" class="form-text">Date Of Travel</label><br>
             <input type="date" id="dot" name="user_dot" class="form-input" th:min="${today}" required>
         </p>
-        <button class="submit-button" type="submit">Submit</button>
+        <button class="submit-button form-text" type="submit">SUBMIT</button>
     </form>
 </div>
 </body>

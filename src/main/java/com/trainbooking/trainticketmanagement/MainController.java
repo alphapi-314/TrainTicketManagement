@@ -9,7 +9,37 @@ import java.time.LocalDate;
 
 @Controller
 public class MainController {
-    @GetMapping({"/" , "/home"})
+    @GetMapping("/")
+    public String redirectToLogin() {
+        return "redirect:/login";
+    }
+
+    @GetMapping( "/login")
+    public String loginPage(Model model) {
+        model.addAttribute("errorMessage", null);
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String loginPage(@RequestParam String username, @RequestParam String password, Model model) {
+        if (UserFunctions.login(username, password)) {
+            return "/home";  // Redirect to home page on successful login
+        }
+        else {
+            model.addAttribute("errorMessage", "Invalid username or password. " + "Please register if you are new.");  // Add error flag for failed login
+            model.addAttribute("showRegister", true);
+            return "login";  // Redirect back to login page
+        }
+    }
+
+    @GetMapping("/register")
+    public String showRegisterPage() {
+        return "register";
+    }
+
+    @PostMapping
+
+    @GetMapping({"/home"})
     public String homePage() {
         return "home";
     }

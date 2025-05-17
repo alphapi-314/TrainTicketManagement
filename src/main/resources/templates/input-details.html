@@ -8,7 +8,7 @@
 </head>
 <body class="book-bg">
 <div class="form-box2">
-    <form action="/book-final" method="POST" class="form-inner">
+    <form action="/book-final" method="POST" class="form-inner" autocomplete="off">
         <p>
             <label for="name" class="form-text">Name</label><br>
             <input type="text" id="name" name="user_name" class="form-input" required>
@@ -21,7 +21,15 @@
             <label for="age" class="form-text">Age</label><br>
             <input type="number" id="age" name="user_age" class="form-input" required>
         </p>
-        <button class="submit-button" type="submit">SUBMIT</button>
+        <p>
+            <label for="coach_type" class="form-text">Coach</label><br>
+            <input type="text" id="coach_type" name="user_coach_type" class="form-input" required>
+        </p>
+        <p>
+            <label for="berth_type" class="form-text">Berth-Type</label><br>
+            <input type="text" id="berth_type" name="user_berth_type" class="form-input" required>
+        </p>
+        <button class="submit-button form-text" type="submit">SUBMIT</button>
     </form>
 </div>
 </body>
