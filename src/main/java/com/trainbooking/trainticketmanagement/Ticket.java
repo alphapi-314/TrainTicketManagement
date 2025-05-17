@@ -1,13 +1,10 @@
 package com.trainbooking.trainticketmanagement;
 
-import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.Sorts;
-import com.mongodb.client.model.Updates;
+import com.mongodb.client.model.*;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.*;
 import java.util.*;
 
 class Ticket extends TrainSeat implements DbConnection {
@@ -32,6 +29,19 @@ class Ticket extends TrainSeat implements DbConnection {
         this.bookTime = bookTime;
         this.pnr = pnr;
         this.status = status;
+    }
+    
+    Ticket(Map<String, Object> ticket){
+        super((int) ticket.get("trainNumber"), (String) ticket.get("trainName"), (String) ticket.get("startStation"),
+                (String) ticket.get("endStation"), (LocalDateTime) ticket.get("departureTime"), (LocalDateTime) ticket.get("arrivalTime"),
+                (LocalDate) ticket.get("date"), (String) ticket.get("seatClass"), (String) ticket.get("coach"),
+                (String) ticket.get("berth"), (int) ticket.get("seatNumber"));
+        this.name = (String) ticket.get("name");
+        this.age = (int) ticket.get("age");
+        this.gender = (String) ticket.get("gender");
+        this.bookTime = (LocalDateTime) ticket.get("bookTime");
+        this.pnr = (int) ticket.get("pnr");
+        this.status = (int) ticket.get("status");
     }
 
     Document toDocument() {
@@ -130,4 +140,79 @@ class Ticket extends TrainSeat implements DbConnection {
             cancelSeat(seat);
         }
     }
+
+    static String upgradeTicket(int pnr, String seatClass, String coach, String berth) {
+        Map<String, Object> ticket = getTicket(pnr);
+        String response;
+        if (ticket == null) {
+            response = "No ticket is present with given PNR";
+            return response;
+        }
+        TrainSeat newSeat = seatAllocation(new Ticket(ticket), seatClass, coach, berth);
+        if (newSeat == null) {
+            response = "No seat is available for the given seat class and coach";
+        }
+        else{
+            cancelTicket(pnr);
+            Bson updates = Updates.combine(
+                    Updates.set("seatClass", newSeat.seatClass),
+                    Updates.set("coach", newSeat.coach),
+                    Updates.set("berth", newSeat.berth),
+                    Updates.set("seatNumber", newSeat.seatNumber),
+                    Updates.set("status", 1)
+            );
+            ticketCollection.updateOne(Filters.eq("pnr", pnr), updates);
+            bookSeat(newSeat);
+            response = "Ticket upgraded successfully";
+        }
+        return response;
+    }
+
+    static String rescheduleTicket(int pnr, LocalDate date, String seatClass, String coach, String berth) {
+        Map<String, Object> ticket = getTicket(pnr);
+        String response;
+        if (ticket == null) {
+            response = "No ticket is present with given PNR";
+            return response;
+        }
+
+        Bson filter = Filters.and(
+                Filters.eq("date", date),
+                Filters.eq("trainNumber", ticket.get("trainNumber"))
+        );
+        Document train = trainCollection.find(filter).first();
+
+        if (train == null) {
+            response = "No train is running on given date";
+        }
+        else {
+            ticket.put("date", date);
+            TrainSeat newSeat = seatAllocation(new Ticket(ticket), seatClass, coach, berth);
+            if (newSeat == null) {
+                response = "No seat is available for the given Date and Seat Class";
+            } else {
+                cancelTicket(pnr);
+                Bson updates = Updates.combine(
+                        Updates.set("date", date),
+                        Updates.set("departureTime", newSeat.departureTime),
+                        Updates.set("arrivalTime", newSeat.arrivalTime),
+                        Updates.set("seatClass", newSeat.seatClass),
+                        Updates.set("coach", newSeat.coach),
+                        Updates.set("berth", newSeat.berth),
+                        Updates.set("seatNumber", newSeat.seatNumber),
+                        Updates.set("status", 1)
+                );
+                ticketCollection.updateOne(Filters.eq("pnr", pnr), updates);
+                bookSeat(newSeat);
+                response = "Ticket rescheduled successfully";
+            }
+        }
+        return response;
+    }
+
+    static void bookTicket(){
+
+    }
+
+
 }

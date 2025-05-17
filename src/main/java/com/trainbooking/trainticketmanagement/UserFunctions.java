@@ -24,25 +24,19 @@ class UserFunctions {
         user.addUser();
     }
 
-    String cancelTicket(int pnr){
+    static String cancelTicket(int pnr){
         return Ticket.cancelTicket(pnr);
     }
 
-    void book(){
+    static void book(){
 
     }
 
-    void reschedule(int pnr, LocalDate date){
-        Map<String,Object> ticket = Ticket.getTicket(pnr);
+    static String rescheduleTicket(int pnr, LocalDate date, String seatClass, String coach, String berth){
+        return Ticket.rescheduleTicket(pnr,date,seatClass,coach,berth);
     }
 
-    void upgrade(int pnr, String seatClass, String coach, String berth) {
-        Map<String,Object> ticket = Ticket.getTicket(pnr);
-        if (ticket == null){
-            System.out.println("No ticket found");
-            return;
-        }
-
+    static String upgradeTicket(int pnr, String seatClass, String coach, String berth) {
+        return Ticket.upgradeTicket(pnr,seatClass,coach,berth);
     }
-
 }

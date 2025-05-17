@@ -7,6 +7,7 @@ import org.bson.conversions.Bson;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 class TrainSeat extends Train implements DbConnection {
     String seatClass;
@@ -22,6 +23,15 @@ class TrainSeat extends Train implements DbConnection {
         this.coach = coach;
         this.berth = berth;
         this.seatNumber = seatNumber;
+    }
+
+    TrainSeat(Ticket ticket){
+        super(ticket.trainNumber, ticket.trainName, ticket.startStation, ticket.endStation,
+                ticket.departureTime, ticket.arrivalTime, ticket.date);
+        this.seatClass = ticket.seatClass;
+        this.coach = ticket.coach;
+        this.berth = ticket.berth;
+        this.seatNumber = ticket.seatNumber;
     }
 
     Document toDocument() {
@@ -83,4 +93,9 @@ class TrainSeat extends Train implements DbConnection {
             seatCollection.updateOne(filter, update);
         }
     }
+
+    protected static TrainSeat seatAllocation(Ticket ticket, String seatClass, String coach, String berth){
+        return new TrainSeat(ticket);
+    }
+
 }
