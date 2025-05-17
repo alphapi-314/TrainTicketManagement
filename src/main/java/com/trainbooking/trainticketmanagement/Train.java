@@ -24,16 +24,6 @@ class Train implements DbConnection {
         this.arrivalTime = arrival;
     }
 
-    Train(Document doc) {
-        this.trainNumber = doc.getInteger("trainNumber");
-        this.trainName = doc.getString("trainName");
-        this.startStation = doc.getString("startStation");
-        this.endStation = doc.getString("endStation");
-        this.departureTime = doc.get("departureTime", LocalDateTime.class);
-        this.arrivalTime = doc.get("arrivalTime", LocalDateTime.class);
-        this.date = doc.get("date", LocalDate.class);
-    }
-
     Document toDocument() {
         return new Document("trainNumber", trainNumber)
                 .append("trainName", trainName)
