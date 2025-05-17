@@ -28,8 +28,11 @@ class UserFunctions {
         return Ticket.cancelTicket(pnr);
     }
 
-    static void book(){
-
+    static String bookTicket(String startStation, String endStation, LocalDate date, int trainNumber,
+                             LocalDateTime departureTime, LocalDateTime arrivalTime, String trainName,
+                             String seatClass, String name, int age, String gender, String coach, String berth){
+        return Ticket.bookTicket(startStation, endStation, date, trainNumber, departureTime, arrivalTime,
+                trainName, seatClass, name, age, gender, coach, berth);
     }
 
     static String rescheduleTicket(int pnr, LocalDate date, String seatClass, String coach, String berth){

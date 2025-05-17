@@ -4,10 +4,8 @@ import com.mongodb.client.model.Filters;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
+import java.time.*;
+import java.util.*;
 
 class TrainSeat extends Train implements DbConnection {
     String seatClass;
@@ -25,13 +23,13 @@ class TrainSeat extends Train implements DbConnection {
         this.seatNumber = seatNumber;
     }
 
-    TrainSeat(Ticket ticket){
-        super(ticket.trainNumber, ticket.trainName, ticket.startStation, ticket.endStation,
-                ticket.departureTime, ticket.arrivalTime, ticket.date);
-        this.seatClass = ticket.seatClass;
-        this.coach = ticket.coach;
-        this.berth = ticket.berth;
-        this.seatNumber = ticket.seatNumber;
+    TrainSeat(TrainSeat seat){
+        super(seat.trainNumber, seat.trainName, seat.startStation, seat.endStation,
+                seat.departureTime, seat.arrivalTime, seat.date);
+        this.seatClass = seat.seatClass;
+        this.coach = seat.coach;
+        this.berth = seat.berth;
+        this.seatNumber = seat.seatNumber;
     }
 
     Document toDocument() {
@@ -94,8 +92,8 @@ class TrainSeat extends Train implements DbConnection {
         }
     }
 
-    protected static TrainSeat seatAllocation(Ticket ticket, String seatClass, String coach, String berth){
-        return new TrainSeat(ticket);
+    protected static TrainSeat seatAllocation(Map<String, Object> ticket, String seatClass, String coach, String berth){
+        return null;
     }
 
 }

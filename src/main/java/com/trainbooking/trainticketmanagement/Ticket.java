@@ -30,18 +30,15 @@ class Ticket extends TrainSeat implements DbConnection {
         this.pnr = pnr;
         this.status = status;
     }
-    
-    Ticket(Map<String, Object> ticket){
-        super((int) ticket.get("trainNumber"), (String) ticket.get("trainName"), (String) ticket.get("startStation"),
-                (String) ticket.get("endStation"), (LocalDateTime) ticket.get("departureTime"), (LocalDateTime) ticket.get("arrivalTime"),
-                (LocalDate) ticket.get("date"), (String) ticket.get("seatClass"), (String) ticket.get("coach"),
-                (String) ticket.get("berth"), (int) ticket.get("seatNumber"));
-        this.name = (String) ticket.get("name");
-        this.age = (int) ticket.get("age");
-        this.gender = (String) ticket.get("gender");
-        this.bookTime = (LocalDateTime) ticket.get("bookTime");
-        this.pnr = (int) ticket.get("pnr");
-        this.status = (int) ticket.get("status");
+
+    Ticket(TrainSeat seat, String name, int age, String gender, LocalDateTime bookTime, int pnr, int status){
+        super(seat);
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.bookTime = bookTime;
+        this.pnr = pnr;
+        this.status = status;
     }
 
     Document toDocument() {
@@ -148,7 +145,7 @@ class Ticket extends TrainSeat implements DbConnection {
             response = "No ticket is present with given PNR";
             return response;
         }
-        TrainSeat newSeat = seatAllocation(new Ticket(ticket), seatClass, coach, berth);
+        TrainSeat newSeat = seatAllocation(ticket, seatClass, coach, berth);
         if (newSeat == null) {
             response = "No seat is available for the given seat class and coach";
         }
@@ -187,7 +184,7 @@ class Ticket extends TrainSeat implements DbConnection {
         }
         else {
             ticket.put("date", date);
-            TrainSeat newSeat = seatAllocation(new Ticket(ticket), seatClass, coach, berth);
+            TrainSeat newSeat = seatAllocation(ticket, seatClass, coach, berth);
             if (newSeat == null) {
                 response = "No seat is available for the given Date and Seat Class";
             } else {
@@ -210,9 +207,33 @@ class Ticket extends TrainSeat implements DbConnection {
         return response;
     }
 
-    static void bookTicket(){
+    static String bookTicket(String startStation, String endStation, LocalDate date, int trainNumber,
+                             LocalDateTime departureTime, LocalDateTime arrivalTime, String trainName,
+                             String seatClass, String name, int age, String gender, String coach, String berth){
+        String response;
+        Map<String, Object> temp = new HashMap<>();
+        temp.put("startStation", startStation);
+        temp.put("endStation", endStation);
+        temp.put("date", date);
+        temp.put("trainNumber", trainNumber);
+        temp.put("name", name);
+        temp.put("age", age);
+        temp.put("gender", gender);
 
+        TrainSeat seat = seatAllocation(temp, seatClass, coach, berth);
+        int pnr = Math.abs(UUID.randomUUID().hashCode());
+        Ticket ticket;
+        if (seat == null) {
+            ticket = new Ticket(trainNumber, trainName, startStation, endStation, departureTime, arrivalTime,
+                    date, seatClass, "", "", 0, name, age, gender, LocalDateTime.now(), pnr, 0 );
+            response = "Your Ticket is Waitlisted";
+        }
+        else{
+            ticket = new Ticket(seat, name, age, gender, LocalDateTime.now(), pnr, 1);
+            bookSeat(seat);
+            response = "Your Ticket is Confirmed";
+        }
+        ticket.addTicket();
+        return response;
     }
-
-
 }
