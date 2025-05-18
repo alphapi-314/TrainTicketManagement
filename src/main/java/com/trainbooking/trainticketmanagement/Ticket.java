@@ -68,7 +68,7 @@ class Ticket extends TrainSeat implements DbConnection {
         }
     }
 
-    static String cancelTicket(int pnr) {
+    static List<Object> cancelTicket(int pnr) {
         Map<String, Object> ticket = getTicket(pnr);
         String response;
         if (ticket == null) {
@@ -103,7 +103,10 @@ class Ticket extends TrainSeat implements DbConnection {
             updateWaitlist(seat);
             response = "Ticket cancelled successfully";
         }
-        return response;
+        List<Object> list = new ArrayList<>();
+        list.add(pnr);
+        list.add(response);
+        return list;
     }
 
     private static void updateWaitlist(TrainSeat seat) {
@@ -138,12 +141,15 @@ class Ticket extends TrainSeat implements DbConnection {
         }
     }
 
-    static String upgradeTicket(int pnr, String seatClass, String coach, String berth) {
+    static List<Object> upgradeTicket(int pnr, String seatClass, String coach, String berth) {
         Map<String, Object> ticket = getTicket(pnr);
+        List<Object> list = new ArrayList<>();
+        list.add(pnr);
         String response;
         if (ticket == null) {
             response = "No ticket is present with given PNR";
-            return response;
+            list.add(response);
+            return list;
         }
         TrainSeat newSeat = seatAllocation(ticket, seatClass, coach, berth);
         if (newSeat == null) {
@@ -162,15 +168,19 @@ class Ticket extends TrainSeat implements DbConnection {
             bookSeat(newSeat);
             response = "Ticket upgraded successfully";
         }
-        return response;
+        list.add(response);
+        return list;
     }
 
-    static String rescheduleTicket(int pnr, LocalDate date, String seatClass, String coach, String berth) {
+    static List<Object> rescheduleTicket(int pnr, LocalDate date, String seatClass, String coach, String berth) {
         Map<String, Object> ticket = getTicket(pnr);
+        List<Object> list = new ArrayList<>();
+        list.add(pnr);
         String response;
         if (ticket == null) {
             response = "No ticket is present with given PNR";
-            return response;
+            list.add(response);
+            return list;
         }
 
         Bson filter = Filters.and(
@@ -204,12 +214,13 @@ class Ticket extends TrainSeat implements DbConnection {
                 response = "Ticket rescheduled successfully";
             }
         }
-        return response;
+        list.add(response);
+        return list;
     }
 
-    static String bookTicket(String startStation, String endStation, LocalDate date, int trainNumber,
-                             LocalDateTime departureTime, LocalDateTime arrivalTime, String trainName,
-                             String seatClass, String name, int age, String gender, String coach, String berth){
+    static List<Object> bookTicket(String startStation, String endStation, LocalDate date, int trainNumber,
+                                   LocalDateTime departureTime, LocalDateTime arrivalTime, String trainName,
+                                   String seatClass, String name, int age, String gender, String coach, String berth){
         String response;
         Map<String, Object> temp = new HashMap<>();
         temp.put("startStation", startStation);
@@ -234,6 +245,9 @@ class Ticket extends TrainSeat implements DbConnection {
             response = "Your Ticket is Confirmed";
         }
         ticket.addTicket();
-        return response;
+        List<Object> list = new ArrayList<>();
+        list.add(pnr);
+        list.add(response);
+        return list;
     }
 }

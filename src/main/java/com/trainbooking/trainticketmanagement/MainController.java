@@ -56,8 +56,8 @@ public class MainController {
     @PostMapping("/cancel")
     public String cancelTicketPage(@RequestParam String pnr) {
         int pnrNumber = Integer.parseInt(pnr);
-        String message = UserFunctions.cancelTicket(pnrNumber);
-        return "redirect:/cancel?message=" + URLEncoder.encode(message, StandardCharsets.UTF_8);
+        List<Object> message = UserFunctions.cancelTicket(pnrNumber);
+        return "redirect:/cancel?message=" + URLEncoder.encode((String) message.get(1), StandardCharsets.UTF_8);
     }
 
     @GetMapping({"/home"})

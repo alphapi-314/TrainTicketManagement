@@ -24,22 +24,22 @@ class UserFunctions {
         user.addUser();
     }
 
-    static String cancelTicket(int pnr){
+    static List<Object> cancelTicket(int pnr){
         return Ticket.cancelTicket(pnr);
     }
 
-    static String bookTicket(String startStation, String endStation, LocalDate date, int trainNumber,
-                             LocalDateTime departureTime, LocalDateTime arrivalTime, String trainName,
-                             String seatClass, String name, int age, String gender, String coach, String berth){
+    static List<Object> bookTicket(String startStation, String endStation, LocalDate date, int trainNumber,
+                                   LocalDateTime departureTime, LocalDateTime arrivalTime, String trainName,
+                                   String seatClass, String name, int age, String gender, String coach, String berth){
         return Ticket.bookTicket(startStation, endStation, date, trainNumber, departureTime, arrivalTime,
                 trainName, seatClass, name, age, gender, coach, berth);
     }
 
-    static String rescheduleTicket(int pnr, LocalDate date, String seatClass, String coach, String berth){
+    static List<Object> rescheduleTicket(int pnr, LocalDate date, String seatClass, String coach, String berth){
         return Ticket.rescheduleTicket(pnr,date,seatClass,coach,berth);
     }
 
-    static String upgradeTicket(int pnr, String seatClass, String coach, String berth) {
+    static List<Object> upgradeTicket(int pnr, String seatClass, String coach, String berth) {
         return Ticket.upgradeTicket(pnr,seatClass,coach,berth);
     }
 }
