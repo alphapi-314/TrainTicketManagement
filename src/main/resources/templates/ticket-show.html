@@ -26,13 +26,13 @@
     <p><strong>Seat Number:</strong> <span th:text="${ticket['seatNumber']}"></span></p>
     <p><strong>Status:</strong>
       <span th:if="${ticket['status']} == 1">Booked</span>
-      <span th:if="${ticket['status']} == 0">Not Booked</span>
-      <span th:if="${ticket['status']} == -1">Waiting List</span>
+      <span th:if="${ticket['status']} == -1">Not Booked</span>
+      <span th:if="${ticket['status']} == 0">Waiting List</span>
     </p>
   </div>
 
-  <div class="ticket-container" th:if="${!found}">
-    <p><strong style="color: red; align-content: center">No ticket found for the entered PNR.</strong></p>
+  <div class="ticket-container-cancel" th:if="${!found}">
+    <p><strong style="color: red; align-content: center">No ticket found for the entered PNR</strong></p>
   </div>
 </div>
 

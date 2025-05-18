@@ -306,6 +306,27 @@
     background-position: center;
     z-index: -1;
 }
+.cancel-ticket-bg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    min-height: 100vh;
+    z-index: 1;
+}
+.cancel-ticket-bg::before {
+    content: "";
+    position: fixed;
+    top: -20px;
+    left: -20px;
+    width: calc(100% + 40px);
+    height: calc(100% + 40px);
+    background-image: url("/images/cancel_train.jpg");
+    filter: grayscale(10%) blur(4px) brightness(95%);
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+}
 .cancel-bg {
     display: flex;
     justify-content: center;
@@ -328,6 +349,26 @@
     background-size: cover;
     background-position: center;
     z-index: -1;
+}
+
+.ticket-container-cancel {
+    background-color: #dfdfdf;
+    text-align:center ;
+    padding: 40px;
+    border-radius: 18px;
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.5);
+    width: 380px;
+    overflow-y: auto;
+    font-family: Arial, sans-serif;
+    z-index: 1;
+    position: fixed;
+    border: 3px solid #ff2815;
+    max-height: 80vh;
+}
+.ticket-container-cancel p {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif ;  /* Change the font type here */
+    font-weight: 500;
+    font-size: 20px;
 }
 .upg-bg {
     display: flex;

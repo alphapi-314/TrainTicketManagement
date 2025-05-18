@@ -1,7 +1,4 @@
 package com.trainbooking.trainticketmanagement;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,10 +51,29 @@ public class MainController {
     }
 
     @PostMapping("/cancel")
-    public String cancelTicketPage(@RequestParam String pnr) {
-        int pnrNumber = Integer.parseInt(pnr);
-        List<Object> message = UserFunctions.cancelTicket(pnrNumber);
-        return "redirect:/cancel?message=" + URLEncoder.encode((String) message.get(1), StandardCharsets.UTF_8);
+    public String cancelTicketPage(@RequestParam Integer pnr, Model model) {
+        Map<String, Object> ticketDetails = UserFunctions.showTicket(pnr);
+        if (ticketDetails == null) {
+            // PNR not found - show popup on the same input page
+            model.addAttribute("invalidPNR", true);
+            return "cancel";  // Thymeleaf template for PNR input
+        }
+        model.addAttribute("found", true);
+        model.addAttribute("ticket", ticketDetails);
+        return "cancel-ticket";
+    }
+
+    @PostMapping("/ticket-cancel")
+    public String cancelTicket(@RequestParam Integer pnr, Model model) {
+            // Cancel the ticket
+        List<Object> cancelResult = UserFunctions.cancelTicket(pnr);
+        String response = (String) cancelResult.get(1);
+        model.addAttribute("message", response);
+
+        Map<String, Object> ticketDetails = UserFunctions.showTicket(pnr);
+        model.addAttribute("found", true);
+        model.addAttribute("ticket", ticketDetails);
+        return "cancel-ticket-show";  // Return the page with the message only
     }
 
     @GetMapping({"/home"})
