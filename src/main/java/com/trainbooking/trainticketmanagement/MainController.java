@@ -1,4 +1,7 @@
 package com.trainbooking.trainticketmanagement;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +26,7 @@ public class MainController {
     @PostMapping("/login")
     public String loginPage(@RequestParam String username, @RequestParam String password, Model model) {
         if (UserFunctions.login(username, password)) {
-            return "/home";  // Redirect to home page on successful login
+            return "home";  // Redirect to home page on successful login
         }
         else {
             model.addAttribute("errorMessage", "Invalid username or password. " + "Please register if you are new.");  // Add error flag for failed login
@@ -37,7 +40,25 @@ public class MainController {
         return "register";
     }
 
-    @PostMapping
+    @PostMapping("/register")
+    public String registerPage(@RequestParam String username, @RequestParam String email, @RequestParam String password) {
+        // Call the UserFunctions register method
+        UserFunctions.registerUser(username, email, password);
+        // Redirect to login page after successful registration
+        return "redirect:/login";
+    }
+
+    @GetMapping("/cancel")
+    public String cancelTicketPage() {
+        return "cancel";
+    }
+
+    @PostMapping("/cancel")
+    public String cancelTicketPage(@RequestParam String pnr) {
+        int pnrNumber = Integer.parseInt(pnr);
+        String message = UserFunctions.cancelTicket(pnrNumber);
+        return "redirect:/cancel?message=" + URLEncoder.encode(message, StandardCharsets.UTF_8);
+    }
 
     @GetMapping({"/home"})
     public String homePage() {
@@ -67,16 +88,8 @@ public class MainController {
         return "upgrade";
     }
 
-    @GetMapping("/cancel")
-    public String cancelTicketPage() {
-        return "cancel";
-    }
-
     @PostMapping("/class-select")
-    public String bookTicket(@RequestParam("user_source") String source,
-                             @RequestParam("user_destination") String destination,
-                             @RequestParam("user_dot") String dot,
-                             Model model) {
+    public String bookTicket(@RequestParam String source, @RequestParam String destination, @RequestParam String dot, Model model) {
         model.addAttribute("source", source);
         model.addAttribute("destination", destination);
         model.addAttribute("dot", dot);
@@ -84,7 +97,7 @@ public class MainController {
     }
 
     @PostMapping("/user-details")
-    public String selectClass(@RequestParam("class") String trainClass, Model model) {
+    public String selectClass(@RequestParam String trainClass, Model model) {
         model.addAttribute("trainClass", trainClass);
         return "input-details";  // Redirect to the seat layout page
     }

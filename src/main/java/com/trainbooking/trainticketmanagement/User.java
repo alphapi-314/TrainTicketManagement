@@ -14,7 +14,6 @@ class User implements DbConnection {
         this.password = password;
         this.emailID = emailID;
     }
-
     Document toDocument(){
         return new Document("userName",userName)
                 .append("password",password)
@@ -25,7 +24,6 @@ class User implements DbConnection {
         Document doc = this.toDocument();
         userCollection.insertOne(doc);
     }
-
     static boolean getUser(String userName, String password) {
         Bson filter = Filters.and(
                 Filters.eq("userName", userName),
@@ -34,5 +32,4 @@ class User implements DbConnection {
 
         return userCollection.find(filter).first() != null;
     }
-
 }
