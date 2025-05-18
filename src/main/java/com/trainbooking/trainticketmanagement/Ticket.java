@@ -90,9 +90,12 @@ class Ticket extends TrainSeat implements DbConnection {
             int trainNumber = (int) ticket.get("trainNumber");
             String trainName = (String) ticket.get("trainName");
             String coach = (String) ticket.get("coach");
-            LocalDateTime departureTime = (LocalDateTime) ticket.get("departureTime");
-            LocalDateTime arrivalTime = (LocalDateTime) ticket.get("arrivalTime");
-            LocalDate date = (LocalDate) ticket.get("date");
+            String departureTimeStr = (String) ticket.get("departureTime");
+            LocalDateTime departureTime = LocalDateTime.parse(departureTimeStr);
+            String arrivalTimeStr = (String) ticket.get("arrivalTime");
+            LocalDateTime arrivalTime = LocalDateTime.parse(arrivalTimeStr);
+            String dateStr = (String) ticket.get("date");
+            LocalDate date = LocalDate.parse(dateStr);
 
             ticketCollection.updateOne(Filters.eq("pnr", pnr), Updates.set("status", -1));
 
@@ -116,8 +119,7 @@ class Ticket extends TrainSeat implements DbConnection {
                 Filters.eq("seatClass", seat.seatClass),
                 Filters.eq("startStation", seat.startStation),
                 Filters.eq("endStation", seat.endStation),
-                Filters.eq("departureTime", seat.departureTime),
-                Filters.eq("arrivalTime", seat.arrivalTime)
+                Filters.eq("date", seat.date.toString())
         );
 
         Document waitingTicket = ticketCollection.find(filter)

@@ -10,8 +10,11 @@ import java.util.*;
 
 public class Test implements DbConnection {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+        Test.addSeats();
+    }
 
+    void c(){
+        Scanner sc = new Scanner(System.in);
 
         String start,end;
         LocalDate date;
@@ -33,7 +36,6 @@ public class Test implements DbConnection {
         System.out.println(d);
 
     }
-
     void ab(){
         LocalDateTime bookTime = LocalDateTime.now();
         LocalDateTime dep = LocalDateTime.parse("2025-05-06T23:30:00");
@@ -45,6 +47,95 @@ public class Test implements DbConnection {
                 "Gaurav", 20, "male", bookTime, 34523, 1 );
         t.addTicket();
         System.out.println("Ticket add success");
+    }
+    
+    static void addSeats() {
+        int trainNumber = 14120;
+        String trainName = "DDN KGM EXP";
+        String date = "2025-06-08";
+        List<String> stations = Arrays.asList(
+            "DEHRADUN", "HARIDWAR", "NAJIBABAD",
+            "MORADABAD", "RAMPUR", "RUDRAPUR", "HALDWANI", "KATHGODAM");
+        List<String[]> stationSegments = new ArrayList<>();
+        for (int i = 0; i < stations.size() - 1; i++) {
+            stationSegments.add(new String[]{stations.get(i), stations.get(i + 1)});
+        }
+
+        class Config {
+            String seatClass;
+            String[] coaches;
+            int compartmentSize;
+            int seatsPerCoach;
+            Config(String seatClass, String[] coaches, int compartmentSize, int seatsPerCoach) {
+                this.seatClass = seatClass;
+                this.coaches = coaches;
+                this.compartmentSize = compartmentSize;
+                this.seatsPerCoach = seatsPerCoach;
+            }
+        }
+
+        Config[] configs = {
+            new Config("1AC", new String[]{"HA1"}, 4, 12),                 // 3 compartments per coach
+            new Config("2AC", new String[]{"A1", "A2"}, 6, 18),            // 3 compartments per coach
+            new Config("3AC", new String[]{"B1", "B2", "B3"}, 8, 24),      // 3 compartments per coach
+            new Config("Sleeper", new String[]{"D1", "D2", "D3", "D4"}, 8, 24) // 3 compartments per coach
+        };
+
+        Random rand = new Random();
+
+        for (Config config : configs) {
+            for (String coach : config.coaches) {
+                for (int s = 0; s < config.seatsPerCoach; s++) {
+                    int seatNumber = s + 1;
+                    int inComp = s % config.compartmentSize;
+                    String berth;
+
+                    if (config.seatClass.equals("1AC")) {
+                        if (inComp == 0 || inComp == 2) berth = "Lower";
+                        else berth = "Upper";
+                    } else if (config.seatClass.equals("2AC")) {
+                        if (inComp == 0 || inComp == 2) berth = "Lower";
+                        else if (inComp == 1 || inComp == 3) berth = "Upper";
+                        else if (inComp == 4) berth = "Side Lower";
+                        else berth = "Side Upper";
+                    } else {
+                        if (inComp == 0 || inComp == 3) berth = "Lower";
+                        else if (inComp == 1 || inComp == 4) berth = "Middle";
+                        else if (inComp == 2 || inComp == 5) berth = "Upper";
+                        else if (inComp == 6) berth = "Side Lower";
+                        else berth = "Side Upper";
+                    }
+
+                    int type = rand.nextInt(3);
+                    List<Document> bookings = new ArrayList<>();
+                    if (type == 2) {
+                        for (String[] seg : stationSegments)
+                            bookings.add(new Document("from", seg[0]).append("to", seg[1]).append("status", 1));
+                    } else if (type == 1) {
+                        boolean booked = rand.nextBoolean();
+                        for (String[] seg : stationSegments) {
+                            bookings.add(new Document("from", seg[0]).append("to", seg[1]).append("status", booked ? 1 : 0));
+                            if (rand.nextInt(3) == 0) booked = !booked;
+                        }
+                    } else {
+                        for (String[] seg : stationSegments)
+                            bookings.add(new Document("from", seg[0]).append("to", seg[1]).append("status", 0));
+                    }
+
+                    Document doc = new Document("trainNumber", trainNumber)
+                        .append("trainName", trainName)
+                        .append("date", date)
+                        .append("seatClass", config.seatClass)
+                        .append("coach", coach)
+                        .append("berth", berth)
+                        .append("seatNumber", seatNumber)
+                        .append("bookings", bookings);
+
+                    seatCollection.insertOne(doc);
+                }
+            }
+        }
+        System.out.println("Seats inserted following specified compartment-wise berth layout.");
     }
 
 }
