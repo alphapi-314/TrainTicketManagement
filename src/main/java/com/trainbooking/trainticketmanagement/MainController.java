@@ -1,6 +1,7 @@
 package com.trainbooking.trainticketmanagement;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -107,7 +108,9 @@ public class MainController {
         model.addAttribute("destination", destination);
         model.addAttribute("dot", dot);
 
-        LocalDate travelDate = LocalDate.parse(dot);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate travelDate = LocalDate.parse(dot, formatter);
+
         List<Map<String, Object>> trainDoc = Train.getTrains(source, destination, travelDate);
         if (trainDoc.isEmpty()) {
             model.addAttribute("errorMessage", "No trains available for the selected route and date.");
@@ -118,8 +121,8 @@ public class MainController {
 
         model.addAttribute("trainNumber", selectedTrain.get("trainNumber")); // or key name as in your Map
         model.addAttribute("trainName", selectedTrain.get("trainName"));
-        model.addAttribute("departure", selectedTrain.get("departure"));
-        model.addAttribute("arrival", selectedTrain.get("arrival"));
+        model.addAttribute("departure", selectedTrain.get("departureTime"));
+        model.addAttribute("arrival", selectedTrain.get("arrivalTime"));
 
         model.addAttribute("source", source);
         model.addAttribute("destination", destination);
