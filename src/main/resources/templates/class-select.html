@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta charset="UTF-8">
+    <title>Train Details</title>
+</head>
+<body>
+<div class="class-select-bg">
+    <div class="class-select-container">
+        <h1 style="text-align: center;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif" >
+            Train Name: Sample </h1>
+
+        <div class="train-details">
+            <div class="left-side">
+                <div style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
+                    Source: <span th:text="${source}"></span>
+                </div>
+                <div style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
+                    Departure Time: <span th:text="${#dates.format(departure, 'HH:mm')}"></span>
+                </div>
+                <div style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
+                    Train No: <span th:text="${trainNumber}"></span>
+                </div>
+            </div>
+            <div class="right-side">
+                <div style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
+                    Date: <span th:text="${dot}"></span>
+                </div>
+                <div style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
+                    Destination: <span th:text="${destination}"></span>
+                </div>
+                <div style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
+                    Arrival Time: <span th:text="${#dates.format(arrival, 'HH:mm')}"></span>
+                </div>
+            </div>
+        </div>
+        <div class="booking-options">
+            <div class="class-box">
+                <form action="/user-details" method="POST">
+                    <h3 class="class-box-text">SL (Sleeper)</h3>
+                    <input type="hidden" name="seat_class" value="SL">
+                    <input type="hidden" name="source" th:value="${source}">
+                    <input type="hidden" name="destination" th:value="${destination}">
+                    <input type="hidden" name="dot" th:value="${dot}">
+
+                    <input type="hidden" name="trainNumber" th:value="${trainNumber}">
+                    <input type="hidden" name="trainName" th:value="${trainName}">
+                    <input type="hidden" name="departure" th:value="${departure}">
+                    <input type="hidden" name="arrival" th:value="${arrival}">
+
+                    <button type="submit">BOOK</button>
+                </form>
+            </div>
+            <div class="class-box">
+                <form action="/user-details" method="POST">
+                    <h3 class="class-box-text">3A (AC 3 Tier)</h3>
+                    <input type="hidden" name="seat_class" value="3A">
+                    <input type="hidden" name="source" th:value="${source}">
+                    <input type="hidden" name="destination" th:value="${destination}">
+                    <input type="hidden" name="dot" th:value="${dot}">
+
+                    <input type="hidden" name="trainNumber" th:value="${trainNumber}">
+                    <input type="hidden" name="trainName" th:value="${trainName}">
+                    <input type="hidden" name="departure" th:value="${departure}">
+                    <input type="hidden" name="arrival" th:value="${arrival}">
+
+                    <button type="submit">BOOK</button>
+                </form>
+            </div>
+            <div class="class-box">
+                <form action="/user-details" method="POST">
+                    <h3 class="class-box-text">2A (AC 2 Tier)</h3>
+                    <input type="hidden" name="seat_class" value="2A">
+                    <input type="hidden" name="source" th:value="${source}">
+                    <input type="hidden" name="destination" th:value="${destination}">
+                    <input type="hidden" name="dot" th:value="${dot}">
+
+                    <input type="hidden" name="trainNumber" th:value="${trainNumber}">
+                    <input type="hidden" name="trainName" th:value="${trainName}">
+                    <input type="hidden" name="departure" th:value="${departure}">
+                    <input type="hidden" name="arrival" th:value="${arrival}">
+
+                    <button type="submit">BOOK</button>
+                </form>
+            </div>
+            <div class="class-box">
+                <form action="/user-details" method="POST">
+                    <h3 class="class-box-text">1A (AC 1 Tier)</h3>
+                    <input type="hidden" name="seat_class" value="1A">
+                    <input type="hidden" name="source" th:value="${source}">
+                    <input type="hidden" name="destination" th:value="${destination}">
+                    <input type="hidden" name="dot" th:value="${dot}">
+
+                    <input type="hidden" name="trainNumber" th:value="${trainNumber}">
+                    <input type="hidden" name="trainName" th:value="${trainName}">
+                    <input type="hidden" name="departure" th:value="${departure}">
+                    <input type="hidden" name="arrival" th:value="${arrival}">
+
+                    <button type="submit">BOOK</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

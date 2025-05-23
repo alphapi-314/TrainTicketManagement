@@ -1,4 +1,6 @@
 package com.trainbooking.trainticketmanagement;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,12 +25,12 @@ public class MainController {
     @PostMapping("/login")
     public String loginPage(@RequestParam String username, @RequestParam String password, Model model) {
         if (UserFunctions.login(username, password)) {
-            return "home";  // Redirect to home page on successful login
+            return "home";
         }
         else {
             model.addAttribute("errorMessage", "Invalid username or password. " + "Please register if you are new.");  // Add error flag for failed login
             model.addAttribute("showRegister", true);
-            return "login";  // Redirect back to login page
+            return "login";
         }
     }
 
@@ -39,9 +41,7 @@ public class MainController {
 
     @PostMapping("/register")
     public String registerPage(@RequestParam String username, @RequestParam String email, @RequestParam String password) {
-        // Call the UserFunctions register method
         UserFunctions.registerUser(username, email, password);
-        // Redirect to login page after successful registration
         return "redirect:/login";
     }
 
@@ -54,9 +54,8 @@ public class MainController {
     public String cancelTicketPage(@RequestParam Integer pnr, Model model) {
         Map<String, Object> ticketDetails = UserFunctions.showTicket(pnr);
         if (ticketDetails == null) {
-            // PNR not found - show popup on the same input page
             model.addAttribute("invalidPNR", true);
-            return "cancel";  // Thymeleaf template for PNR input
+            return "cancel";
         }
         model.addAttribute("found", true);
         model.addAttribute("ticket", ticketDetails);
@@ -65,7 +64,6 @@ public class MainController {
 
     @PostMapping("/ticket-cancel")
     public String cancelTicket(@RequestParam Integer pnr, Model model) {
-            // Cancel the ticket
         List<Object> cancelResult = UserFunctions.cancelTicket(pnr);
         String response = (String) cancelResult.get(1);
         model.addAttribute("message", response);
@@ -73,7 +71,7 @@ public class MainController {
         Map<String, Object> ticketDetails = UserFunctions.showTicket(pnr);
         model.addAttribute("found", true);
         model.addAttribute("ticket", ticketDetails);
-        return "cancel-ticket-show";  // Return the page with the message only
+        return "cancel-ticket-show";
     }
 
     @GetMapping({"/home"})
@@ -83,7 +81,6 @@ public class MainController {
 
     @GetMapping("/book")
     public String bookTicketPage(Model model) {
-        // Pass today's date to the Thymeleaf template
         model.addAttribute("today", LocalDate.now());
         return "book";
     }
@@ -109,13 +106,119 @@ public class MainController {
         model.addAttribute("source", source);
         model.addAttribute("destination", destination);
         model.addAttribute("dot", dot);
-        return "train-book";
+
+        LocalDate travelDate = LocalDate.parse(dot);
+        List<Map<String, Object>> trainDoc = Train.getTrains(source, destination, travelDate);
+        if (trainDoc.isEmpty()) {
+            model.addAttribute("errorMessage", "No trains available for the selected route and date.");
+            model.addAttribute("today", LocalDate.now());
+            return "book";
+        }
+        Map<String, Object> selectedTrain = trainDoc.get(0);
+
+        model.addAttribute("trainNumber", selectedTrain.get("trainNumber")); // or key name as in your Map
+        model.addAttribute("trainName", selectedTrain.get("trainName"));
+        model.addAttribute("departure", selectedTrain.get("departure"));
+        model.addAttribute("arrival", selectedTrain.get("arrival"));
+
+        model.addAttribute("source", source);
+        model.addAttribute("destination", destination);
+        model.addAttribute("dot", dot);
+        return "class-select";
     }
 
     @PostMapping("/user-details")
-    public String selectClass(@RequestParam String trainClass, Model model) {
-        model.addAttribute("trainClass", trainClass);
-        return "input-details";  // Redirect to the seat layout page
+    public String selectClass(@RequestParam String seat_class,
+                              @RequestParam String source,
+                              @RequestParam String destination,
+                              @RequestParam String dot,
+                              @RequestParam int trainNumber,
+                              @RequestParam String trainName,
+                              @RequestParam String departure,
+                              @RequestParam String arrival,
+                              Model model) {
+        model.addAttribute("seatClass", seat_class);
+        model.addAttribute("source", source);
+        model.addAttribute("destination", destination);
+        model.addAttribute("dot", dot);
+        model.addAttribute("trainNumber", trainNumber);
+        model.addAttribute("trainName", trainName);
+        model.addAttribute("departure", departure);
+        model.addAttribute("arrival", arrival);
+        return "input-details";
+    }
+
+    @PostMapping("/book-final")
+    public String bookFinal(@RequestParam String user_name,
+                            @RequestParam int user_age,
+                            @RequestParam String user_gender,
+                            @RequestParam String coach_type,
+                            @RequestParam String berth_type,
+                            @RequestParam String source,
+                            @RequestParam String destination,
+                            @RequestParam String dot,
+                            @RequestParam String seat_class,
+                            @RequestParam int trainNumber,
+                            @RequestParam String trainName,
+                            @RequestParam String departure,
+                            @RequestParam String arrival,
+                            Model model) {
+        if (user_age <= 0 || user_age >= 100) {
+            model.addAttribute("errorMessage", "Enter age between 0-100");
+            model.addAttribute("source", source);
+            model.addAttribute("destination", destination);
+            model.addAttribute("dot", dot);
+            model.addAttribute("seatClass", seat_class);
+            return "input-details";
+        }
+        LocalDate travelDate = LocalDate.parse(dot);
+        LocalDateTime departureTime = LocalDateTime.parse(departure);
+        LocalDateTime arrivalTime = LocalDateTime.parse(arrival);
+        List<Object> ticketInfo = UserFunctions.bookTicket(
+                source,
+                destination,
+                travelDate,
+                trainNumber,
+                departureTime,
+                arrivalTime,
+                trainName,
+                seat_class,
+                user_name,
+                user_age,
+                user_gender,
+                coach_type,
+                berth_type
+        );
+        int pnr = (int) ticketInfo.get(0);
+        String statusMessage = (String) ticketInfo.get(1);
+        int statusCode;
+        if (statusMessage.contains("Your Ticket is Confirmed")) {
+            statusCode = 1;
+        } else if (statusMessage.contains("Your Ticket is Waitlisted")) {
+            statusCode = 0;
+        } else {
+            statusCode = -1;
+        }
+        Map<String, Object> ticket = new HashMap<>();
+        ticket.put("pnr", pnr);
+        ticket.put("name", user_name);
+        ticket.put("age", user_age);
+        ticket.put("gender", user_gender);
+        ticket.put("bookTime", LocalDateTime.now().toString());
+        ticket.put("trainNumber", trainNumber);
+        ticket.put("trainName", trainName);
+        ticket.put("startStation", source);
+        ticket.put("endStation", destination);
+        ticket.put("departureTime", departure);
+        ticket.put("arrivalTime", arrival);
+        ticket.put("seatClass", seat_class);
+        ticket.put("coach", coach_type);
+        ticket.put("berth", berth_type);
+        ticket.put("seatNumber", "");  // set if you have seat number info
+        ticket.put("status", statusCode);
+        model.addAttribute("ticket", ticket);
+        model.addAttribute("found", true);
+        return "train-book-complete";
     }
 
     @PostMapping("/submit-show")

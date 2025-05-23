@@ -66,7 +66,6 @@
 }
 
 
-
 .train-book-bg {
     display:flex;
     align-items: center;
@@ -88,32 +87,111 @@
     background-position: center;
     z-index: -1;
 }
-.class-box {
-    background-color: #ffffff;
-    padding: 10px 10px;
-    border-radius: 15px;
+.train-book-ticket-container {
+    background-color: #dfdfdf;
+    text-align:left ;
+    padding: 35px;
+    border-radius: 18px;
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.5);
+    width: 380px;
+    overflow-y: auto;
+    font-family: Arial, sans-serif;
+    z-index: 1;
+    position: fixed;
+    border: 4px solid rgba(76, 175, 80, 1);
+    max-height: 80vh;
+}
+.train-book-ticket-container p {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif ;  /* Change the font type here */
+    font-weight: 500;
+    font-size: 18px;
+}
+.class-select-container h1 {
     text-align: center;
-    border: 2px solid #009503;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    width: 200px;
-    transition: transform 0.3s, box-shadow 0.3s;
+    margin: 10px 0 5px 0; /* top, right, bottom, left */
 }
-.class-box button {
-    padding: 10px 15px;
-    background-color: #30c800;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.2s;
+.class-select-bg {
+    position: fixed; /* Fix to the viewport */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
 }
-.class-box button:hover {
-    background-color: #009c03;
+.class-select-bg::before {
+    content: "";
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    width: calc(100% + 40px);
+    height: calc(100% + 40px);
+    background-image: url("/images/book_train.jpg");
+    filter: grayscale(10%) blur(4px) brightness(95%);
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+}
+.class-select-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 950px;
+    height: 30%;
+    background-color: white;
+    margin-top: 40px;
+    border-radius: 25px;
+    box-shadow: 0 0px 20px rgba(34, 34, 34, 0.8);
+    padding: 25px;
+}
+.train-details {
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0 0 20px 0;
+}
+.left-side, .right-side {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.booking-options {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+.class-box {
+    background-color: #f2f2f2;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border: 2px solid rgba(76, 175, 80, 1);
 }
 .class-box-text {
-    font-family: 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif ;
-    font-weight:bolder ;
-    font-size: 22px;
+    margin: 0 0 10px 0;
+    font-weight: bold;
+}
+.class-box button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.class-box button:hover {
+    background-color: #388E3C;
 }
 
 
@@ -417,8 +495,6 @@
     z-index: -1;
 }
 
-
-
 .text-2 {
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif ;
     font-weight:600 ;
@@ -430,7 +506,7 @@
     opacity: 0.94;
     color: white;
     border: 2px solid #00905b;
-    margin-top: 100px;
+    margin-top: 90px;
     padding: 20px 20px;
     background-color: #61cf65;
     border-radius: 10px;

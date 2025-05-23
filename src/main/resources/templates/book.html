@@ -21,7 +21,11 @@
             <label for="dot" class="form-text">Date Of Travel</label><br>
             <input type="date" id="dot" name="dot" class="form-input" th:min="${today}" required>
         </p>
+
         <button class="submit-button form-text" type="submit">SUBMIT</button>
+        <p th:if="${errorMessage}" th:text="${errorMessage}"
+           style="color: #d50606; font-weight: bold; text-align: center; margin-top: 15px;">
+        </p>
     </form>
 </div>
 </body>

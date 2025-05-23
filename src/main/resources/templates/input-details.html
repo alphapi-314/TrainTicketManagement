@@ -14,22 +14,46 @@
             <input type="text" id="name" name="user_name" class="form-input" required>
         </p>
         <p>
+            <label for="age" class="form-text">Age</label><br>
+            <input type="number" id="age" name="user_age" class="form-input" required min="1" max="100">
+        </p>
+        <p>
             <label for="gender" class="form-text">Gender</label><br>
             <input type="text" id="gender" name="user_gender" class="form-input" required>
         </p>
         <p>
-            <label for="age" class="form-text">Age</label><br>
-            <input type="number" id="age" name="user_age" class="form-input" required>
-        </p>
-        <p>
             <label for="coach_type" class="form-text">Coach</label><br>
-            <input type="text" id="coach_type" name="user_coach_type" class="form-input" required>
+            <input type="text" id="coach_type" name="coach_type" class="form-input" required>
         </p>
         <p>
             <label for="berth_type" class="form-text">Berth-Type</label><br>
-            <input type="text" id="berth_type" name="user_berth_type" class="form-input" required>
+            <select id="berth_type" name="berth_type" class="form-input" required>
+                <option th:if="${seatClass == '1A'}" value="Lower Berth">Lower Berth</option>
+                <option th:if="${seatClass == '1A'}" value="Upper Berth">Upper Berth</option>
+
+                <option th:if="${seatClass == '2A'}" value="Lower Berth">Lower Berth</option>
+                <option th:if="${seatClass == '2A'}" value="Upper Berth">Upper Berth</option>
+                <option th:if="${seatClass == '2A'}" value="Side Lower">Side Lower</option>
+                <option th:if="${seatClass == '2A'}" value="Side Upper">Side Upper</option>
+
+                <option th:if="${seatClass == '3A' or seatClass == 'SL'}" value="Lower Berth">Lower Berth</option>
+                <option th:if="${seatClass == '3A' or seatClass == 'SL'}" value="Middle Berth">Middle Berth</option>
+                <option th:if="${seatClass == '3A' or seatClass == 'SL'}" value="Upper Berth">Upper Berth</option>
+                <option th:if="${seatClass == '3A' or seatClass == 'SL'}" value="Side Lower">Side Lower</option>
+                <option th:if="${seatClass == '3A' or seatClass == 'SL'}" value="Side Upper">Side Upper</option>
+            </select>
         </p>
         <button class="submit-button form-text" type="submit">SUBMIT</button>
+
+        <input type="hidden" name="source" th:value="${source}">
+        <input type="hidden" name="destination" th:value="${destination}">
+        <input type="hidden" name="dot" th:value="${dot}">
+        <input type="hidden" name="seat_class" th:value="${seatClass}">
+
+        <input type="hidden" name="trainNumber" th:value="${trainNumber}">
+        <input type="hidden" name="trainName" th:value="${trainName}">
+        <input type="hidden" name="departure" th:value="${departure}">
+        <input type="hidden" name="arrival" th:value="${arrival}">
     </form>
 </div>
 </body>
