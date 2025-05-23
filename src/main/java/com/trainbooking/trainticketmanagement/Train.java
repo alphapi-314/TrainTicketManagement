@@ -35,7 +35,7 @@ class Train implements DbConnection {
     }
 
     private static List<Document> fetchTrains(String startStation, String endStation, LocalDate date) {
-        Bson matchDate = Filters.eq("date", date);
+        Bson matchDate = Filters.eq("date", date.toString());
 
         Bson projection = new Document()
                 .append("trainNumber", 1)
@@ -81,9 +81,9 @@ class Train implements DbConnection {
                 trainMap.put("date", doc.get("date"));
                 trainMap.put("seatClasses", doc.get("seatClasses"));
                 trainMap.put("startStation", start.getString("stationName"));
-                trainMap.put("departureTime", start.getDate("departureTime"));
+                trainMap.put("departureTime", start.getString("departureTime"));
                 trainMap.put("endStation", end.getString("stationName"));
-                trainMap.put("arrivalTime", end.getDate("arrivalTime"));
+                trainMap.put("arrivalTime", end.getString("arrivalTime"));
 
                 result.add(trainMap);
             }

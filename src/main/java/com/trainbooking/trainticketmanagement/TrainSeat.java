@@ -93,6 +93,11 @@ class TrainSeat extends Train implements DbConnection {
     }
 
     protected static TrainSeat seatAllocation(Map<String, Object> ticket, String seatClass, String coach, String berth){
+        Bson filter = Filters.and(
+                Filters.eq("trainNumber", (int) ticket.get("trainNumber")),
+                Filters.eq("date", ticket.get("date").toString()),
+                Filters.eq("seatClass", ticket.get("seatClass").toString())
+        );
         return null;
     }
 
