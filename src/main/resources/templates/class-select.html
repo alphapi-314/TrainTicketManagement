@@ -8,7 +8,7 @@
 <body>
 <div class="class-select-bg">
     <div class="class-select-container">
-        <h1 style="text-align: center;font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif" >
+        <h1 style="text-align: center; margin-bottom: 25px; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif" >
             Train Name: <span th:text="${trainName}"></span>
         </h1>
         <div class="train-details">
@@ -20,7 +20,7 @@
                     Source: <span th:text="${source}"></span>
                 </div>
                 <div style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
-                    Departure Time: <span th:text="${#dates.format(departure, 'HH:mm')}"></span>
+                    Departure Time: <span th:text="${departure}"></span>
                 </div>
             </div>
             <div class="right-side">
@@ -31,7 +31,7 @@
                     Destination: <span th:text="${destination}"></span>
                 </div>
                 <div style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
-                    Arrival Time: <span th:text="${#dates.format(arrival, 'HH:mm')}"></span>
+                    Arrival Time: <span th:text="${arrival}"></span>
                 </div>
             </div>
         </div>

@@ -100,5 +100,4 @@ class TrainSeat extends Train implements DbConnection {
         );
         return null;
     }
-
 }

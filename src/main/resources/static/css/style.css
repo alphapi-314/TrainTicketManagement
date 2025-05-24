@@ -143,12 +143,11 @@
     flex-direction: column;
     justify-content: flex-start;
     width: 950px;
-    height: 30%;
     background-color: white;
     margin-top: 40px;
     border-radius: 25px;
     box-shadow: 0 0px 20px rgba(34, 34, 34, 0.8);
-    padding: 25px;
+    padding: 35px;
 }
 .train-details {
     display: flex;
@@ -165,9 +164,9 @@
 .booking-options {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 25px;
     flex-wrap: wrap;
-    margin-top: 20px;
+    margin-top: 50px;
 }
 .class-box {
     background-color: #f2f2f2;

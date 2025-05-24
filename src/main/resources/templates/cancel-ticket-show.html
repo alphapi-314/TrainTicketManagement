@@ -29,7 +29,7 @@
         <p><strong>Seat Number:</strong> <span th:text="${ticket['seatNumber']}"></span></p>
         <p><strong>Status:</strong>
             <span th:if="${ticket['status']} == 1">Booked</span>
-            <span th:if="${ticket['status']} == -1">Not Booked</span>
+            <span th:if="${ticket['status']} == -1">Canceled</span>
             <span th:if="${ticket['status']} == 0">Waiting List</span>
         </p>
     </div>

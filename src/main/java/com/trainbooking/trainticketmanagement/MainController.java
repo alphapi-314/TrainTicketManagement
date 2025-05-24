@@ -1,7 +1,5 @@
 package com.trainbooking.trainticketmanagement;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -104,29 +102,27 @@ public class MainController {
 
     @PostMapping("/class-select")
     public String bookTicket(@RequestParam String source, @RequestParam String destination, @RequestParam String dot, Model model) {
-        model.addAttribute("source", source);
-        model.addAttribute("destination", destination);
+        String normalizedSource = source.toUpperCase();
+        String normalizedDestination = destination.toUpperCase();
+        model.addAttribute("source", normalizedSource);
+        model.addAttribute("destination", normalizedDestination);
         model.addAttribute("dot", dot);
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate travelDate = LocalDate.parse(dot, formatter);
+        LocalDate travelDate = LocalDate.parse(dot);
 
-        List<Map<String, Object>> trainDoc = Train.getTrains(source, destination, travelDate);
+        List<Map<String, Object>> trainDoc = Train.getTrains(normalizedSource, normalizedDestination, travelDate);
         if (trainDoc.isEmpty()) {
             model.addAttribute("errorMessage", "No trains available for the selected route and date.");
             model.addAttribute("today", LocalDate.now());
             return "book";
         }
+
         Map<String, Object> selectedTrain = trainDoc.get(0);
 
         model.addAttribute("trainNumber", selectedTrain.get("trainNumber")); // or key name as in your Map
         model.addAttribute("trainName", selectedTrain.get("trainName"));
         model.addAttribute("departure", selectedTrain.get("departureTime"));
         model.addAttribute("arrival", selectedTrain.get("arrivalTime"));
-
-        model.addAttribute("source", source);
-        model.addAttribute("destination", destination);
-        model.addAttribute("dot", dot);
         return "class-select";
     }
 
@@ -135,7 +131,7 @@ public class MainController {
                               @RequestParam String source,
                               @RequestParam String destination,
                               @RequestParam String dot,
-                              @RequestParam int trainNumber,
+                              @RequestParam String trainNumber,
                               @RequestParam String trainName,
                               @RequestParam String departure,
                               @RequestParam String arrival,
@@ -167,7 +163,7 @@ public class MainController {
                             @RequestParam String arrival,
                             Model model) {
         if (user_age <= 0 || user_age >= 100) {
-            model.addAttribute("errorMessage", "Enter age between 0-100");
+            model.addAttribute("errorMessage", "Enter age between 1-99");
             model.addAttribute("source", source);
             model.addAttribute("destination", destination);
             model.addAttribute("dot", dot);
