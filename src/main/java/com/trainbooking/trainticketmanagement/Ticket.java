@@ -232,6 +232,7 @@ class Ticket extends TrainSeat implements DbConnection {
         temp.put("name", name);
         temp.put("age", age);
         temp.put("gender", gender);
+        temp.put("seatClass", seatClass);
 
         TrainSeat seat = seatAllocation(temp, seatClass, coach, berth);
         int pnr = Math.abs(UUID.randomUUID().hashCode());

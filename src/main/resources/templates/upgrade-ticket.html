@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ticket Details</title>
+</head>
+<body>
+<div class="upg-ticket-bg">
+  <div class="ticket-container-upgrade" th:if="${found}">
+    <p><strong>PNR:</strong> <span th:text="${ticket['pnr']}"></span></p>
+    <p><strong>Name:</strong> <span th:text="${ticket['name']}"></span></p>
+    <p><strong>Age:</strong> <span th:text="${ticket['age']}"></span></p>
+    <p><strong>Gender:</strong> <span th:text="${ticket['gender']}"></span></p>
+    <p><strong>Booking Time:</strong> <span th:text="${ticket['bookTime']}"></span></p>
+    <p><strong>Train Number:</strong> <span th:text="${ticket['trainNumber']}"></span></p>
+    <p><strong>Train Name:</strong> <span th:text="${ticket['trainName']}"></span></p>
+    <p><strong>Start Station:</strong> <span th:text="${ticket['startStation']}"></span></p>
+    <p><strong>End Station:</strong> <span th:text="${ticket['endStation']}"></span></p>
+    <p><strong>Departure Time:</strong> <span th:text="${ticket['departureTime']}"></span></p>
+    <p><strong>Arrival Time:</strong> <span th:text="${ticket['arrivalTime']}"></span></p>
+    <p><strong>Seat Class:</strong> <span th:text="${ticket['seatClass']}"></span></p>
+    <p><strong>Coach:</strong> <span th:text="${ticket['coach']}"></span></p>
+    <p><strong>Berth:</strong> <span th:text="${ticket['berth']}"></span></p>
+    <p><strong>Seat Number:</strong> <span th:text="${ticket['seatNumber']}"></span></p>
+    <p><strong>Status:</strong>
+      <span th:if="${ticket['status']} == 1">Booked</span>
+      <span th:if="${ticket['status']} == -1">Not Booked</span>
+      <span th:if="${ticket['status']} == 0">Waiting List</span>
+    </p>
+    <form th:action="@{/ticket-upgrade}" method="POST" class="form-login-inner">
+      <input type="hidden" name="pnr" th:value="${ticket['pnr']}" />
+      <button type="submit" class="submit-button form-text">UPGRADE TICKET</button>
+    </form>
+  </div>
+</div>
+</body>
+</html>

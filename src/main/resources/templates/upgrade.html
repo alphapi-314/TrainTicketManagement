@@ -7,14 +7,17 @@
     <title> Railway Booking System! </title>
 </head>
 <body class="upg-bg">
-<div class="form-box2">
+<div class="form-box2" th:if="${invalidPNR == null or !invalidPNR}">
     <form action="/upgrade" method="POST" class="form-inner" autocomplete="off">
         <p>
             <label for="pnr" class="form-text">Enter PNR Number</label><br>
-            <input type="text" id="pnr" name="user_pnr" class="form-input" required>
+            <input type="text" id="pnr" name="pnr" class="form-input" required>
         </p>
         <button class="submit-button form-text" type="submit">SUBMIT</button>
     </form>
+</div>
+<div class="ticket-container-cancel" th:if="${invalidPNR}">
+    <p><strong style="color: red; align-content: center">No ticket found for the entered PNR</strong></p>
 </div>
 </body>
 </html>

@@ -19,11 +19,28 @@
         </p>
         <p>
             <label for="gender" class="form-text">Gender</label><br>
-            <input type="text" id="gender" name="user_gender" class="form-input" required>
+            <select id="gender" name="user_gender" class="form-input" required>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
         </p>
         <p>
-            <label for="coach_type" class="form-text">Coach</label><br>
-            <input type="text" id="coach_type" name="coach_type" class="form-input" required>
+            <label for="coach_type" class="form-text">Coach-Type</label><br>
+            <select id="coach_type" name="coach_type" class="form-input" required>
+                <option th:if="${seatClass == '1A'}" value="HA1">HA1</option>
+
+                <option th:if="${seatClass == '2A'}" value="A1">A1</option>
+                <option th:if="${seatClass == '2A'}" value="A2">A2</option>
+
+                <option th:if="${seatClass == '3A'}" value="B1">B1</option>
+                <option th:if="${seatClass == '3A'}" value="B2">B2</option>
+                <option th:if="${seatClass == '3A'}" value="B3">B3</option>
+
+                <option th:if="${seatClass == 'SL'}" value="D1">D1</option>
+                <option th:if="${seatClass == 'SL'}" value="D2">D2</option>
+                <option th:if="${seatClass == 'SL'}" value="D3">D3</option>
+                <option th:if="${seatClass == 'SL'}" value="D4">D4</option>
+            </select>
         </p>
         <p>
             <label for="berth_type" class="form-text">Berth-Type</label><br>

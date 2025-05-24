@@ -61,8 +61,63 @@ public class MainController {
         return "cancel-ticket";
     }
 
+    @GetMapping("/upgrade")
+    public String upgradeTicketPage() {
+        return "upgrade";
+    }
+
+    @PostMapping("/upgrade")
+    public String upgradeTicketPage(@RequestParam Integer pnr, Model model) {
+        Map<String, Object> ticketDetails = UserFunctions.showTicket(pnr);
+        if (ticketDetails == null) {
+            model.addAttribute("invalidPNR", true);
+            return "upgrade";
+        }
+        model.addAttribute("found", true);
+        model.addAttribute("ticket", ticketDetails);
+        return "upgrade-ticket";
+    }
+
+    @GetMapping("/reschedule")
+    public String rescheduleTicketPage(Model model) {
+        model.addAttribute("today", LocalDate.now());
+        return "reschedule";
+    }
+    @PostMapping("/reschedule")
+    public String rescheduleTicketPage(@RequestParam Integer pnr, Model model) {
+        Map<String, Object> ticketDetails = UserFunctions.showTicket(pnr);
+        if (ticketDetails == null) {
+            model.addAttribute("invalidPNR", true);
+            return "reschedule";
+        }
+        model.addAttribute("found", true);
+        model.addAttribute("ticket", ticketDetails);
+        return "reschedule-ticket";
+    }
     @PostMapping("/ticket-cancel")
     public String cancelTicket(@RequestParam Integer pnr, Model model) {
+        List<Object> cancelResult = UserFunctions.cancelTicket(pnr);
+        String response = (String) cancelResult.get(1);
+        model.addAttribute("message", response);
+
+        Map<String, Object> ticketDetails = UserFunctions.showTicket(pnr);
+        model.addAttribute("found", true);
+        model.addAttribute("ticket", ticketDetails);
+        return "cancel-ticket-show";
+    }
+    @PostMapping("ticket-upgrade")
+    public String upgradeTicket(@RequestParam Integer pnr, Model model) {
+        List<Object> cancelResult = UserFunctions.cancelTicket(pnr);
+        String response = (String) cancelResult.get(1);
+        model.addAttribute("message", response);
+
+        Map<String, Object> ticketDetails = UserFunctions.showTicket(pnr);
+        model.addAttribute("found", true);
+        model.addAttribute("ticket", ticketDetails);
+        return "cancel-ticket-show";
+    }
+    @PostMapping("ticket-reschedule")
+    public String rescheduleTicket(@RequestParam Integer pnr, Model model) {
         List<Object> cancelResult = UserFunctions.cancelTicket(pnr);
         String response = (String) cancelResult.get(1);
         model.addAttribute("message", response);
@@ -87,17 +142,6 @@ public class MainController {
     @GetMapping("/show")
     public String pnrTicketPage() {
         return "show";
-    }
-
-    @GetMapping("/reschedule")
-    public String rescheduleTicketPage(Model model) {
-        model.addAttribute("today", LocalDate.now());
-        return "res";
-    }
-
-    @GetMapping("/upgrade")
-    public String upgradeTicketPage() {
-        return "upgrade";
     }
 
     @PostMapping("/class-select")
