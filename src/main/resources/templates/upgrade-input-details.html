@@ -6,24 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Railway Booking System</title>
 </head>
-<body class="book-bg">
+<body class="upg-ticket-bg">
 <div class="form-box2">
-    <form action="/book-final" method="POST" class="form-inner" autocomplete="off">
-        <p>
-            <label for="name" class="form-text">Name</label><br>
-            <input type="text" id="name" name="user_name" class="form-input" required>
-        </p>
-        <p>
-            <label for="age" class="form-text">Age</label><br>
-            <input type="number" id="age" name="user_age" class="form-input" required min="1" max="100">
-        </p>
-        <p>
-            <label for="gender" class="form-text">Gender</label><br>
-            <select id="gender" name="user_gender" class="form-input" required>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-            </select>
-        </p>
+    <form action="/upgrade-final" method="POST" class="form-inner" autocomplete="off">
         <p>
             <label for="coach_type" class="form-text">Coach-Type</label><br>
             <select id="coach_type" name="coach_type" class="form-input" required>
@@ -71,9 +56,8 @@
 
         <input type="hidden" name="source" th:value="${source}">
         <input type="hidden" name="destination" th:value="${destination}">
-        <input type="hidden" name="dot" th:value="${dot}">
         <input type="hidden" name="seat_class" th:value="${seatClass}">
-
+        <input type="hidden" name="pnr" th:value="${pnr}">
         <input type="hidden" name="trainNumber" th:value="${trainNumber}">
         <input type="hidden" name="trainName" th:value="${trainName}">
         <input type="hidden" name="departure" th:value="${departure}">

@@ -25,14 +25,28 @@
     <p><strong>Berth:</strong> <span th:text="${ticket['berth']}"></span></p>
     <p><strong>Seat Number:</strong> <span th:text="${ticket['seatNumber']}"></span></p>
     <p><strong>Status:</strong>
-      <span th:if="${ticket['status']} == 1">Booked</span>
-      <span th:if="${ticket['status']} == -1">Not Booked</span>
-      <span th:if="${ticket['status']} == 0">Waiting List</span>
+      <span th:if="${ticket['status'] == 1}">Booked</span>
+      <span th:if="${ticket['status'] == -1}">Canceled</span>
+      <span th:if="${ticket['status'] == 0}">On Waiting List</span>
     </p>
-    <form th:action="@{/ticket-upgrade}" method="POST" class="form-login-inner">
-      <input type="hidden" name="pnr" th:value="${ticket['pnr']}" />
-      <button type="submit" class="submit-button form-text">UPGRADE TICKET</button>
-    </form>
+
+    <div th:if="${ticket['status'] != -1}">
+      <form th:action="@{/ticket-upgrade}" method="POST" class="form-login-inner">
+        <input type="hidden" name="pnr" th:value="${ticket['pnr']}" />
+        <input type="hidden" name="trainNumber" th:value="${ticket['trainNumber']}" />
+        <input type="hidden" name="trainName" th:value="${ticket['trainName']}" />
+        <input type="hidden" name="startStation" th:value="${ticket['startStation']}" />
+        <input type="hidden" name="endStation" th:value="${ticket['endStation']}" />
+        <input type="hidden" name="departureTime" th:value="${ticket['departureTime']}" />
+        <input type="hidden" name="arrivalTime" th:value="${ticket['arrivalTime']}" />
+        <button type="submit" class="submit-button form-text">UPGRADE TICKET</button>
+      </form>
+    </div>
+
+    <div th:if="${ticket['status'] == -1}">
+      <p style="color: red; font-weight: bold;">This ticket has been canceled and cannot be upgraded.</p>
+    </div>
+
   </div>
 </div>
 </body>

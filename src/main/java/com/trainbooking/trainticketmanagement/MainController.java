@@ -77,6 +77,74 @@ public class MainController {
         model.addAttribute("ticket", ticketDetails);
         return "upgrade-ticket";
     }
+    @PostMapping("ticket-upgrade")
+    public String upgradeTicket(@RequestParam int pnr,
+                                @RequestParam int trainNumber,
+                                @RequestParam String trainName,
+                                @RequestParam String startStation,
+                                @RequestParam String endStation,
+                                @RequestParam String departureTime,
+                                @RequestParam String arrivalTime,
+                                Model model) {
+        model.addAttribute("pnr", pnr);
+        model.addAttribute("trainNumber", trainNumber);
+        model.addAttribute("trainName", trainName);
+        model.addAttribute("source", startStation);
+        model.addAttribute("destination", endStation);
+        model.addAttribute("departure", departureTime);
+        model.addAttribute("arrival", arrivalTime);
+        return "ticket-upgrade-class";
+    }
+    @PostMapping("/upgrade-input-details")
+    public String upgradeInputDetails(@RequestParam int pnr,
+                                      @RequestParam int trainNumber,
+                                      @RequestParam String trainName,
+                                      @RequestParam String source,
+                                      @RequestParam String destination,
+                                      @RequestParam String departure,
+                                      @RequestParam String arrival,
+                                      @RequestParam String seat_class,
+                                      Model model) {
+        model.addAttribute("pnr", pnr);
+        model.addAttribute("seatClass", seat_class);
+        model.addAttribute("source", source);
+        model.addAttribute("destination", destination);
+        model.addAttribute("trainNumber", trainNumber);
+        model.addAttribute("trainName", trainName);
+        model.addAttribute("departure", departure);
+        model.addAttribute("arrival", arrival);
+        return "upgrade-input-details";
+    }
+    @PostMapping("/upgrade-final")
+    public String upgradeFinal(@RequestParam int pnr,
+                               @RequestParam int trainNumber,
+                               @RequestParam String trainName,
+                               @RequestParam String source,
+                               @RequestParam String destination,
+                               @RequestParam String departure,
+                               @RequestParam String arrival,
+                               @RequestParam String seat_class,
+                               @RequestParam String coach_type,
+                               @RequestParam String berth_type,
+                               Model model) {
+        model.addAttribute("pnr", pnr);
+        model.addAttribute("seatClass", seat_class);
+        model.addAttribute("source", source);
+        model.addAttribute("destination", destination);
+        model.addAttribute("trainNumber", trainNumber);
+        model.addAttribute("trainName", trainName);
+        model.addAttribute("departure", departure);
+        model.addAttribute("arrival", arrival);
+
+        List<Object> result = UserFunctions.upgradeTicket(pnr, seat_class, coach_type, berth_type);
+        String responseMessage = (String) result.get(1);
+        model.addAttribute("message", responseMessage);
+
+        Map<String, Object> ticketDetails = UserFunctions.showTicket(pnr);
+        model.addAttribute("found", true);
+        model.addAttribute("ticket", ticketDetails);
+        return "upgraded-ticket-show";
+    }
 
     @GetMapping("/reschedule")
     public String rescheduleTicketPage(Model model) {
@@ -96,17 +164,6 @@ public class MainController {
     }
     @PostMapping("/ticket-cancel")
     public String cancelTicket(@RequestParam Integer pnr, Model model) {
-        List<Object> cancelResult = UserFunctions.cancelTicket(pnr);
-        String response = (String) cancelResult.get(1);
-        model.addAttribute("message", response);
-
-        Map<String, Object> ticketDetails = UserFunctions.showTicket(pnr);
-        model.addAttribute("found", true);
-        model.addAttribute("ticket", ticketDetails);
-        return "cancel-ticket-show";
-    }
-    @PostMapping("ticket-upgrade")
-    public String upgradeTicket(@RequestParam Integer pnr, Model model) {
         List<Object> cancelResult = UserFunctions.cancelTicket(pnr);
         String response = (String) cancelResult.get(1);
         model.addAttribute("message", response);
@@ -175,7 +232,7 @@ public class MainController {
                               @RequestParam String source,
                               @RequestParam String destination,
                               @RequestParam String dot,
-                              @RequestParam String trainNumber,
+                              @RequestParam int trainNumber,
                               @RequestParam String trainName,
                               @RequestParam String departure,
                               @RequestParam String arrival,
