@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Railway Booking System</title>
+</head>
+<body class="reschedule-ticket-bg">
+<div class="form-box2">
+    <form action="/reschedule-final" method="POST" class="form-inner" autocomplete="off">
+        <p>
+            <label for="coach_type" class="form-text">Coach-Type</label><br>
+            <select id="coach_type" name="coach_type" class="form-input" required>
+                <option value="" disabled selected>Select Coach</option>
+                <option th:if="${seatClass == 'AC First Class'}" value="HA1">HA1</option>
+                <option th:if="${seatClass == 'AC First Class'}" value="null">NONE</option>
+
+                <option th:if="${seatClass == 'AC 2 Tier'}" value="A1">A1</option>
+                <option th:if="${seatClass == 'AC 2 Tier'}" value="A2">A2</option>
+                <option th:if="${seatClass == 'AC 2 Tier'}" value="null">NONE</option>
+
+                <option th:if="${seatClass == 'AC 3  Tier'}" value="B1">B1</option>
+                <option th:if="${seatClass == 'AC 3  Tier'}" value="B2">B2</option>
+                <option th:if="${seatClass == 'AC 3  Tier'}" value="B3">B3</option>
+                <option th:if="${seatClass == 'AC 3  Tier'}" value="null">NONE</option>
+
+                <option th:if="${seatClass == 'Sleeper'}" value="D1">D1</option>
+                <option th:if="${seatClass == 'Sleeper'}" value="D2">D2</option>
+                <option th:if="${seatClass == 'Sleeper'}" value="D3">D3</option>
+                <option th:if="${seatClass == 'Sleeper'}" value="D4">D4</option>
+                <option th:if="${seatClass == 'Sleeper'}" value="null">NONE</option>
+            </select>
+        </p>
+        <p>
+            <label for="berth_type" class="form-text">Berth-Type</label><br>
+            <select id="berth_type" name="berth_type" class="form-input" required>
+                <option value="" disabled selected>Select Berth</option>
+                <option th:if="${seatClass == 'AC First Class'}" value="Lower Berth">Lower Berth</option>
+                <option th:if="${seatClass == 'AC First Class'}" value="Upper Berth">Upper Berth</option>
+                <option th:if="${seatClass == 'AC First Class'}" value="null">NONE</option>
+
+                <option th:if="${seatClass == 'AC 2 Tier'}" value="Lower Berth">Lower Berth</option>
+                <option th:if="${seatClass == 'AC 2 Tier'}" value="Upper Berth">Upper Berth</option>
+                <option th:if="${seatClass == 'AC 2 Tier'}" value="Side Lower">Side Lower</option>
+                <option th:if="${seatClass == 'AC 2 Tier'}" value="Side Upper">Side Upper</option>
+                <option th:if="${seatClass == 'AC 2 Tier'}" value="null">NONE</option>
+
+                <option th:if="${seatClass == 'AC 3  Tier' or seatClass == 'Sleeper'}" value="Lower Berth">Lower Berth</option>
+                <option th:if="${seatClass == 'AC 3  Tier' or seatClass == 'Sleeper'}" value="Middle Berth">Middle Berth</option>
+                <option th:if="${seatClass == 'AC 3  Tier' or seatClass == 'Sleeper'}" value="Upper Berth">Upper Berth</option>
+                <option th:if="${seatClass == 'AC 3  Tier' or seatClass == 'Sleeper'}" value="Side Lower">Side Lower</option>
+                <option th:if="${seatClass == 'AC 3  Tier' or seatClass == 'Sleeper'}" value="Side Upper">Side Upper</option>
+                <option th:if="${seatClass == 'AC 3  Tier'}" value="null">NONE</option>
+            </select>
+        </p>
+        <button class="submit-button form-text" type="submit">SUBMIT</button>
+
+        <input type="hidden" name="pnr" th:value="${pnr}">
+        <input type="hidden" name="seatClass" th:value="${seatClass}">
+        <input type="hidden" name="dot" th:value="${dot}">
+    </form>
+</div>
+</body>
+</html>

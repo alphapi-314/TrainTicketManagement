@@ -9,6 +9,9 @@
 <body>
 <div class="reschedule-ticket-bg">
     <div class="ticket-container-reschedule" th:if="${found}">
+        <div th:if="${message}">
+            <p style="color: green; font-weight: bold; text-align: center;" th:text="${message}"></p>
+        </div>
         <p><strong>PNR:</strong> <span th:text="${ticket['pnr']}"></span></p>
         <p><strong>Name:</strong> <span th:text="${ticket['name']}"></span></p>
         <p><strong>Age:</strong> <span th:text="${ticket['age']}"></span></p>
@@ -25,22 +28,10 @@
         <p><strong>Berth:</strong> <span th:text="${ticket['berth']}"></span></p>
         <p><strong>Seat Number:</strong> <span th:text="${ticket['seatNumber']}"></span></p>
         <p><strong>Status:</strong>
-            <span th:if="${ticket['status'] == 1}">Booked</span>
-            <span th:if="${ticket['status'] == -1}">Canceled</span>
-            <span th:if="${ticket['status'] == 0}">On Waiting List</span>
+            <span th:if="${ticket['status']} == 1">Booked</span>
+            <span th:if="${ticket['status']} == -1">Canceled</span>
+            <span th:if="${ticket['status']} == 0">Waiting List</span>
         </p>
-
-        <div th:if="${ticket['status'] != -1}">
-            <form th:action="@{/ticket-reschedule}" method="POST" class="form-login-inner">
-                <input type="hidden" name="pnr" th:value="${ticket['pnr']}" />
-                <button type="submit" class="submit-button form-text">RESCHEDULE TICKET</button>
-            </form>
-        </div>
-
-        <div th:if="${ticket['status'] == -1}">
-            <p style="color: red; font-weight: bold;">This ticket has been canceled and cannot be rescheduled.</p>
-        </div>
-
     </div>
 </div>
 </body>

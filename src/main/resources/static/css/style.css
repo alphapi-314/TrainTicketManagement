@@ -414,7 +414,7 @@
     font-family: Arial, sans-serif;
     z-index: 1;
     position: fixed;
-    border: 3px solid #4d99fc;
+    border: 3px solid #2091ff;
     max-height: 80vh;
 }
 .ticket-container-reschedule p {

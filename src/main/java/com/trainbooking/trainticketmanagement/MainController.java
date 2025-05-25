@@ -77,6 +77,7 @@ public class MainController {
         model.addAttribute("ticket", ticketDetails);
         return "upgrade-ticket";
     }
+
     @PostMapping("ticket-upgrade")
     public String upgradeTicket(@RequestParam int pnr,
                                 @RequestParam int trainNumber,
@@ -95,6 +96,7 @@ public class MainController {
         model.addAttribute("arrival", arrivalTime);
         return "ticket-upgrade-class";
     }
+
     @PostMapping("/upgrade-input-details")
     public String upgradeInputDetails(@RequestParam int pnr,
                                       @RequestParam int trainNumber,
@@ -115,6 +117,7 @@ public class MainController {
         model.addAttribute("arrival", arrival);
         return "upgrade-input-details";
     }
+
     @PostMapping("/upgrade-final")
     public String upgradeFinal(@RequestParam int pnr,
                                @RequestParam int trainNumber,
@@ -148,11 +151,11 @@ public class MainController {
 
     @GetMapping("/reschedule")
     public String rescheduleTicketPage(Model model) {
-        model.addAttribute("today", LocalDate.now());
         return "reschedule";
     }
+
     @PostMapping("/reschedule")
-    public String rescheduleTicketPage(@RequestParam Integer pnr, Model model) {
+    public String rescheduleTicketPage(@RequestParam Integer pnr,Model model) {
         Map<String, Object> ticketDetails = UserFunctions.showTicket(pnr);
         if (ticketDetails == null) {
             model.addAttribute("invalidPNR", true);
@@ -162,19 +165,50 @@ public class MainController {
         model.addAttribute("ticket", ticketDetails);
         return "reschedule-ticket";
     }
-    @PostMapping("/ticket-cancel")
-    public String cancelTicket(@RequestParam Integer pnr, Model model) {
-        List<Object> cancelResult = UserFunctions.cancelTicket(pnr);
-        String response = (String) cancelResult.get(1);
-        model.addAttribute("message", response);
+
+    @PostMapping("/ticket-reschedule")
+    public String rescheduleTicket(@RequestParam int pnr,Model model) {
+        model.addAttribute("pnr", pnr);
+        model.addAttribute("today", LocalDate.now());
+        return "ticket-reschedule-date";
+    }
+
+    @PostMapping("/ticket-reschedule-berth")
+    public String rescheduleTicket(@RequestParam int pnr,
+                                   @RequestParam String dot,
+                                   @RequestParam String seatClass,
+                                   Model model) {
+        model.addAttribute("pnr", pnr);
+        model.addAttribute("dot", dot);
+        model.addAttribute("seatClass", seatClass);
+        return "ticket-reschedule-berth";
+    }
+
+    @PostMapping("/reschedule-final")
+    public String rescheduleFinal(@RequestParam int pnr,
+                                  @RequestParam String dot,
+                                  @RequestParam String seatClass,
+                                  @RequestParam String coach_type,
+                                  @RequestParam String berth_type,
+                                  Model model) {
+        model.addAttribute("pnr", pnr);
+        model.addAttribute("dot", dot);
+        model.addAttribute("seatClass", seatClass);
+        model.addAttribute("coach_type", coach_type);
+        model.addAttribute("berth_type", berth_type);
+        LocalDate travelDate = LocalDate.parse(dot);
+        List<Object> result = UserFunctions.rescheduleTicket(pnr, travelDate, seatClass, coach_type, berth_type);
+        String responseMessage = (String) result.get(1);
+        model.addAttribute("message", responseMessage);
 
         Map<String, Object> ticketDetails = UserFunctions.showTicket(pnr);
         model.addAttribute("found", true);
         model.addAttribute("ticket", ticketDetails);
-        return "cancel-ticket-show";
+        return "reschedule-ticket-show";
     }
-    @PostMapping("ticket-reschedule")
-    public String rescheduleTicket(@RequestParam Integer pnr, Model model) {
+
+    @PostMapping("/ticket-cancel")
+    public String cancelTicket(@RequestParam Integer pnr, Model model) {
         List<Object> cancelResult = UserFunctions.cancelTicket(pnr);
         String response = (String) cancelResult.get(1);
         model.addAttribute("message", response);
