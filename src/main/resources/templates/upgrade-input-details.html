@@ -34,19 +34,19 @@
         <p>
             <label for="berth_type" class="form-text">Berth-Type</label><br>
             <select id="berth_type" name="berth_type" class="form-input" required>
-                <option th:if="${seatClass == '1A'}" value="Lower Berth">Lower Berth</option>
-                <option th:if="${seatClass == '1A'}" value="Upper Berth">Upper Berth</option>
+                <option th:if="${seatClass == '1A'}" value="Lower">Lower Berth</option>
+                <option th:if="${seatClass == '1A'}" value="Upper">Upper Berth</option>
                 <option th:if="${seatClass == '1A'}" value="null">NONE</option>
 
-                <option th:if="${seatClass == '2A'}" value="Lower Berth">Lower Berth</option>
-                <option th:if="${seatClass == '2A'}" value="Upper Berth">Upper Berth</option>
+                <option th:if="${seatClass == '2A'}" value="Lower">Lower Berth</option>
+                <option th:if="${seatClass == '2A'}" value="Upper">Upper Berth</option>
                 <option th:if="${seatClass == '2A'}" value="Side Lower">Side Lower</option>
                 <option th:if="${seatClass == '2A'}" value="Side Upper">Side Upper</option>
                 <option th:if="${seatClass == '2A'}" value="null">NONE</option>
 
-                <option th:if="${seatClass == '3A' or seatClass == 'SL'}" value="Lower Berth">Lower Berth</option>
-                <option th:if="${seatClass == '3A' or seatClass == 'SL'}" value="Middle Berth">Middle Berth</option>
-                <option th:if="${seatClass == '3A' or seatClass == 'SL'}" value="Upper Berth">Upper Berth</option>
+                <option th:if="${seatClass == '3A' or seatClass == 'SL'}" value="Lower">Lower Berth</option>
+                <option th:if="${seatClass == '3A' or seatClass == 'SL'}" value="Middle">Middle Berth</option>
+                <option th:if="${seatClass == '3A' or seatClass == 'SL'}" value="Upper">Upper Berth</option>
                 <option th:if="${seatClass == '3A' or seatClass == 'SL'}" value="Side Lower">Side Lower</option>
                 <option th:if="${seatClass == '3A' or seatClass == 'SL'}" value="Side Upper">Side Upper</option>
                 <option th:if="${seatClass == '3A'}" value="null">NONE</option>

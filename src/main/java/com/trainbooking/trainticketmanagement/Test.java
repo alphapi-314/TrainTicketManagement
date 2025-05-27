@@ -10,7 +10,7 @@ import java.util.*;
 
 public class Test implements DbConnection {
     public static void main(String[] args) {
-        test();
+        Test.addSeats();
     }
 
     void c(){
@@ -52,7 +52,7 @@ public class Test implements DbConnection {
     static void addSeats() {
         int trainNumber = 14120;
         String trainName = "DDN KGM EXP";
-        String date = "2025-05-29";
+        String date = "2025-05-28";
         List<String> stations = Arrays.asList(
             "DEHRADUN", "HARIDWAR", "NAJIBABAD",
             "MORADABAD", "RAMPUR", "RUDRAPUR", "HALDWANI", "KATHGODAM");

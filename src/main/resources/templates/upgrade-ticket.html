@@ -31,7 +31,7 @@
     </p>
 
     <div th:if="${ticket['status'] != -1}">
-      <form th:action="@{/ticket-reschedule}" method="POST" class="form-login-inner">
+      <form th:action="@{/ticket-upgrade}" method="POST" class="form-login-inner">
         <input type="hidden" name="pnr" th:value="${ticket['pnr']}" />
         <input type="hidden" name="trainNumber" th:value="${ticket['trainNumber']}" />
         <input type="hidden" name="trainName" th:value="${ticket['trainName']}" />

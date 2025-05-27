@@ -224,15 +224,15 @@ public class MainController {
         return "home";
     }
 
+    @GetMapping("/show")
+    public String pnrTicketPage() {
+        return "show";
+    }
+
     @GetMapping("/book")
     public String bookTicketPage(Model model) {
         model.addAttribute("today", LocalDate.now());
         return "book";
-    }
-
-    @GetMapping("/show")
-    public String pnrTicketPage() {
-        return "show";
     }
 
     @PostMapping("/class-select")
@@ -323,8 +323,8 @@ public class MainController {
                 coach_type,
                 berth_type
         );
-        int pnr = (int) ticketInfo.get(0);
-        String statusMessage = (String) ticketInfo.get(1);
+        int pnr=(int)ticketInfo.get(0);
+        String statusMessage=(String)ticketInfo.get(1);
         int statusCode;
         if (statusMessage.contains("Your Ticket is Confirmed")) {
             statusCode = 1;
@@ -333,25 +333,29 @@ public class MainController {
         } else {
             statusCode = -1;
         }
-        Map<String, Object> ticket = new HashMap<>();
-        ticket.put("pnr", pnr);
-        ticket.put("name", user_name);
-        ticket.put("age", user_age);
-        ticket.put("gender", user_gender);
-        ticket.put("bookTime", LocalDateTime.now().toString());
-        ticket.put("trainNumber", trainNumber);
-        ticket.put("trainName", trainName);
-        ticket.put("startStation", source);
-        ticket.put("endStation", destination);
-        ticket.put("departureTime", departure);
-        ticket.put("arrivalTime", arrival);
-        ticket.put("seatClass", seat_class);
-        ticket.put("coach", coach_type);
-        ticket.put("berth", berth_type);
-        ticket.put("seatNumber", "");  // set if you have seat number info
-        ticket.put("status", statusCode);
-        model.addAttribute("ticket", ticket);
-        model.addAttribute("found", true);
+        Map<String, Object> ticketDetails = UserFunctions.showTicket(pnr);
+        boolean found = ticketDetails != null;
+        model.addAttribute("found", found);
+        model.addAttribute("ticket", ticketDetails);
+//        Map<String, Object> ticket = new HashMap<>();
+//        ticket.put("pnr", pnr);
+//        ticket.put("name", user_name);
+//        ticket.put("age", user_age);
+//        ticket.put("gender", user_gender);
+//        ticket.put("bookTime", LocalDateTime.now().toString());
+//        ticket.put("trainNumber", trainNumber);
+//        ticket.put("trainName", trainName);
+//        ticket.put("startStation", source);
+//        ticket.put("endStation", destination);
+//        ticket.put("departureTime", departure);
+//        ticket.put("arrivalTime", arrival);
+//        ticket.put("seatClass", seat_class);
+//        ticket.put("coach", coach_type);
+//        ticket.put("berth", berth_type);
+//        ticket.put("seatNumber", "");  // set if you have seat number info
+//        ticket.put("status", statusCode);
+//        model.addAttribute("ticket", ticket);
+//        model.addAttribute("found", true);
         return "train-book-complete";
     }
 
