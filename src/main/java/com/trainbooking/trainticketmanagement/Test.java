@@ -10,7 +10,7 @@ import java.util.*;
 
 public class Test implements DbConnection {
     public static void main(String[] args) {
-        Test.addSeats();
+        test();
     }
 
     void c(){
@@ -18,7 +18,7 @@ public class Test implements DbConnection {
 
         String start,end;
         LocalDate date;
-        date = LocalDate.parse("2025-05-08");
+        date = LocalDate.parse("2025-05-28");
         System.out.println("Enter start and end ");
         start = sc.nextLine();
         end = sc.nextLine();
@@ -52,7 +52,7 @@ public class Test implements DbConnection {
     static void addSeats() {
         int trainNumber = 14120;
         String trainName = "DDN KGM EXP";
-        String date = "2025-06-08";
+        String date = "2025-05-29";
         List<String> stations = Arrays.asList(
             "DEHRADUN", "HARIDWAR", "NAJIBABAD",
             "MORADABAD", "RAMPUR", "RUDRAPUR", "HALDWANI", "KATHGODAM");
@@ -138,4 +138,40 @@ public class Test implements DbConnection {
         System.out.println("Seats inserted following specified compartment-wise berth layout.");
     }
 
+// Add this method in your Test.java class
+public static void test() {
+    String startStation = "DEHRADUN";
+    String endStation = "RAMPUR";
+    LocalDate date = LocalDate.parse("2025-05-29");
+    int trainNumber = 14120;
+    LocalDateTime departureTime = LocalDateTime.parse("2025-05-29T22:00:00");
+    LocalDateTime arrivalTime = LocalDateTime.parse("2025-05-30T03:15:00");
+    String trainName = "DDN KGM EXP";
+    String seatClass = "3AC";
+    String name = "TestUser";
+    int age = 30;
+    String gender = "male";
+    String coach = "B2";
+    String berth = "Upper";
+
+    // Call the method to book ticket
+    List<Object> bookingResult = UserFunctions.bookTicket(
+        startStation,
+        endStation,
+        date,
+        trainNumber,
+        departureTime,
+        arrivalTime,
+        trainName,
+        seatClass,
+        name,
+        age,
+        gender,
+        coach,
+        berth
+    );
+
+    // Print the result for verification
+    System.out.println("Booking Result: " + bookingResult);
+}
 }
