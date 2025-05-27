@@ -243,7 +243,8 @@ class Ticket extends TrainSeat implements DbConnection {
             response = "Your Ticket is Waitlisted";
         }
         else{
-            ticket = new Ticket(seat, name, age, gender, LocalDateTime.now(), pnr, 1);
+            ticket = new Ticket(trainNumber, trainName, startStation, endStation, departureTime, arrivalTime,
+                    date, seatClass, seat.coach, seat.berth, seat.seatNumber, name, age, gender, LocalDateTime.now(), pnr, 1);
             bookSeat(seat);
             response = "Your Ticket is Confirmed";
         }
