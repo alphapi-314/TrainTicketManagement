@@ -22,6 +22,7 @@ class Train implements DbConnection {
         this.endStation = end;
         this.departureTime = departure;
         this.arrivalTime = arrival;
+        this.date = date;
     }
 
     Document toDocument() {
@@ -31,7 +32,7 @@ class Train implements DbConnection {
                 .append("endStation", endStation)
                 .append("departureTime", departureTime)
                 .append("arrivalTime", arrivalTime)
-                .append("date", date);
+                .append("date", date.toString());
     }
 
     private static List<Document> fetchTrains(String startStation, String endStation, LocalDate date) {

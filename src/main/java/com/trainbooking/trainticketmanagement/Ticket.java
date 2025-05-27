@@ -31,16 +31,6 @@ class Ticket extends TrainSeat implements DbConnection {
         this.status = status;
     }
 
-    Ticket(TrainSeat seat, String name, int age, String gender, LocalDateTime bookTime, int pnr, int status){
-        super(seat);
-        this.name = name;
-        this.age = age;
-        this.gender = gender;
-        this.bookTime = bookTime;
-        this.pnr = pnr;
-        this.status = status;
-    }
-
     Document toDocument() {
         return super.toDocument()
                 .append("name", name)
@@ -186,7 +176,7 @@ class Ticket extends TrainSeat implements DbConnection {
         }
 
         Bson filter = Filters.and(
-                Filters.eq("date", date),
+                Filters.eq("date", date.toString()),
                 Filters.eq("trainNumber", ticket.get("trainNumber"))
         );
         Document train = trainCollection.find(filter).first();
@@ -195,7 +185,7 @@ class Ticket extends TrainSeat implements DbConnection {
             response = "No train is running on given date";
         }
         else {
-            ticket.put("date", date);
+            ticket.put("date", date.toString());
             TrainSeat newSeat = seatAllocation(ticket, seatClass, coach, berth);
             if (newSeat == null) {
                 response = "No seat is available for the given Date and Seat Class";
@@ -227,7 +217,7 @@ class Ticket extends TrainSeat implements DbConnection {
         Map<String, Object> temp = new HashMap<>();
         temp.put("startStation", startStation);
         temp.put("endStation", endStation);
-        temp.put("date", date);
+        temp.put("date", date.toString());
         temp.put("trainNumber", trainNumber);
         temp.put("name", name);
         temp.put("age", age);

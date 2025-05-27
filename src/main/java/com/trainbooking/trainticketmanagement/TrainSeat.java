@@ -185,17 +185,13 @@ private static List<Document> freeSeats(Map<String, Object> details, String seat
     int trainNumber = (Integer) details.get("trainNumber");
     String startStation = (String) details.get("startStation");
     String endStation = (String) details.get("endStation");
-    LocalDate date = (LocalDate) details.get("date");
-
-    String dateStr = date.toString();
-    System.out.println(dateStr);
-    System.out.println(date);
+    String date = (String) details.get("date");
 
     List<Document> seats = seatCollection.find(
             Filters.and(
                     Filters.eq("trainNumber", trainNumber),
                     Filters.eq("seatClass", seatClass),
-                    Filters.eq("date", dateStr)
+                    Filters.eq("date", date)
             )
     ).into(new ArrayList<>());
 
