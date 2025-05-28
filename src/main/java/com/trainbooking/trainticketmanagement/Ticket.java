@@ -52,6 +52,42 @@ class Ticket extends TrainSeat implements DbConnection {
 
         if (doc != null) {
             doc.remove("_id");
+            Object depObj = doc.get("departureTime");
+            LocalDateTime depLdt;
+            if (depObj instanceof Date) {
+                depLdt = Instant.ofEpochMilli(((Date) depObj).getTime())
+                        .atZone(ZoneId.systemDefault())
+                        .toLocalDateTime();
+            } else {
+                // assume String
+                depLdt = LocalDateTime.parse(depObj.toString());
+            }
+            doc.put("departureTime", depLdt);
+
+            // ---- normalize arrivalTime to LocalDateTime ----
+            Object arrObj = doc.get("arrivalTime");
+            LocalDateTime arrLdt;
+            if (arrObj instanceof Date) {
+                arrLdt = Instant.ofEpochMilli(((Date) arrObj).getTime())
+                        .atZone(ZoneId.systemDefault())
+                        .toLocalDateTime();
+            } else {
+                arrLdt = LocalDateTime.parse(arrObj.toString());
+            }
+            doc.put("arrivalTime", arrLdt);
+
+            // ---- normalize date to LocalDate ----
+            Object dateObj = doc.get("date");
+            LocalDate localDate;
+            if (dateObj instanceof Date) {
+                localDate = ((Date) dateObj).toInstant()
+                        .atZone(ZoneId.systemDefault())
+                        .toLocalDate();
+            } else {
+                localDate = LocalDate.parse(dateObj.toString());
+            }
+            doc.put("date", localDate);
+
             return new LinkedHashMap<>(doc);
         } else {
             return null;
@@ -80,10 +116,10 @@ class Ticket extends TrainSeat implements DbConnection {
             int trainNumber = (int) ticket.get("trainNumber");
             String trainName = (String) ticket.get("trainName");
             String coach = (String) ticket.get("coach");
-            String departureTimeStr = (String) ticket.get("departureTime");
-            LocalDateTime departureTime = LocalDateTime.parse(departureTimeStr);
-            String arrivalTimeStr = (String) ticket.get("arrivalTime");
-            LocalDateTime arrivalTime = LocalDateTime.parse(arrivalTimeStr);
+//            String departureTimeStr = (String) ticket.get("departureTime");
+            LocalDateTime departureTime = (LocalDateTime) ticket.get("departureTime");
+//            String arrivalTimeStr = (String) ticket.get("arrivalTime");
+            LocalDateTime arrivalTime = (LocalDateTime) ticket.get("arrivalTime");
             LocalDate date = (LocalDate) ticket.get("date");
 
             ticketCollection.updateOne(Filters.eq("pnr", pnr), Updates.set("status", -1));
