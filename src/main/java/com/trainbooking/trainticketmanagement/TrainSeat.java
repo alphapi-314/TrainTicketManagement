@@ -1,6 +1,6 @@
 package com.trainbooking.trainticketmanagement;
 
-import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.*;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
@@ -23,15 +23,6 @@ class TrainSeat extends Train implements DbConnection {
         this.seatNumber = seatNumber;
     }
 
-    TrainSeat(TrainSeat seat){
-        super(seat.trainNumber, seat.trainName, seat.startStation, seat.endStation,
-                seat.departureTime, seat.arrivalTime, seat.date);
-        this.seatClass = seat.seatClass;
-        this.coach = seat.coach;
-        this.berth = seat.berth;
-        this.seatNumber = seat.seatNumber;
-    }
-
     Document toDocument() {
         return super.toDocument()
                 .append("seatClass", seatClass)
@@ -40,57 +31,68 @@ class TrainSeat extends Train implements DbConnection {
                 .append("seatNumber", seatNumber);
     }
     
-    protected static void bookSeat(TrainSeat seat){
-        Bson filter = Filters.and(
-                Filters.eq("trainNumber", seat.trainNumber),
-                Filters.eq("date", seat.date),
-                Filters.eq("seatClass", seat.seatClass),
-                Filters.eq("coach", seat.coach),
-                Filters.eq("seatNumber", seat.seatNumber)
-        );
+protected static void bookSeat(TrainSeat seat){
+    // convert the LocalDate into the same String format you stored in Mongo
+    String dateStr = seat.date.toString();
 
-        Document doc = seatCollection.find(filter).first();
-        if (doc != null) {
-            List<Document> bookings = (List<Document>) doc.get("bookings");
-            boolean flag = false;
-            for (Document booking : bookings) {
-                String from = booking.getString("from");
-                String to = booking.getString("to");
+    Bson filter = Filters.and(
+        Filters.eq("trainNumber", seat.trainNumber),
+        Filters.eq("date", dateStr),
+        Filters.eq("seatClass", seat.seatClass),
+        Filters.eq("coach", seat.coach),
+        Filters.eq("seatNumber", seat.seatNumber)
+    );
 
-                if (from.equalsIgnoreCase(seat.startStation)) flag = true;
-                if (flag) booking.put("status", 1);
-                if (to.equalsIgnoreCase(seat.endStation)) break;
-            }
-            Bson update = new Document("$set", new Document("bookings", bookings));
-            seatCollection.updateOne(filter, update);
+    Document doc = seatCollection.find(filter).first();
+    if (doc != null) {
+        @SuppressWarnings("unchecked")
+        List<Document> bookings = (List<Document>) doc.get("bookings");
+        boolean flag = false;
+        for (Document booking : bookings) {
+            String from = booking.getString("from");
+            String to   = booking.getString("to");
+
+            if (from.equalsIgnoreCase(seat.startStation)) flag = true;
+            if (flag) booking.put("status", 1);
+            if (to.equalsIgnoreCase(seat.endStation)) break;
         }
+
+        Bson update = Updates.set("bookings", bookings);
+        seatCollection.updateOne(filter, update);
+        System.out.println(bookings);
+        System.out.println("Booked seat: " + seat.coach + "-" + seat.berth + "-" + seat.seatNumber);
     }
-    
-    protected static void cancelSeat(TrainSeat seat) {
-        Bson filter = Filters.and(
-            Filters.eq("trainNumber", seat.trainNumber),
-            Filters.eq("date", seat.date),
-            Filters.eq("seatClass", seat.seatClass),
-            Filters.eq("coach", seat.coach),
-            Filters.eq("seatNumber", seat.seatNumber)
-        );
+}
 
-        Document doc = seatCollection.find(filter).first();
-        if (doc != null) {
-            List<Document> bookings = (List<Document>) doc.get("bookings");
-            boolean flag = false;
-            for (Document booking : bookings) {
-                String from = booking.getString("from");
-                String to = booking.getString("to");
+protected static void cancelSeat(TrainSeat seat) {
+    String dateStr = seat.date.toString();
 
-                if (from.equalsIgnoreCase(seat.startStation)) flag = true;
-                if (flag) booking.put("status", 0);
-                if (to.equalsIgnoreCase(seat.endStation)) break;
-            }
-            Bson update = new Document("$set", new Document("bookings", bookings));
-            seatCollection.updateOne(filter, update);
+    Bson filter = Filters.and(
+        Filters.eq("trainNumber", seat.trainNumber),
+        Filters.eq("date", dateStr),
+        Filters.eq("seatClass", seat.seatClass),
+        Filters.eq("coach", seat.coach),
+        Filters.eq("seatNumber", seat.seatNumber)
+    );
+
+    Document doc = seatCollection.find(filter).first();
+    if (doc != null) {
+        @SuppressWarnings("unchecked")
+        List<Document> bookings = (List<Document>) doc.get("bookings");
+        boolean flag = false;
+        for (Document booking : bookings) {
+            String from = booking.getString("from");
+            String to   = booking.getString("to");
+
+            if (from.equalsIgnoreCase(seat.startStation)) flag = true;
+            if (flag) booking.put("status", 0);
+            if (to.equalsIgnoreCase(seat.endStation)) break;
         }
+
+        Bson update = Updates.set("bookings", bookings);
+        seatCollection.updateOne(filter, update);
     }
+}
 
 protected static TrainSeat seatAllocation(Map<String, Object> ticket, String seatClass, String coachPref, String berthPref) {
     List<Document> free = freeSeats(ticket, seatClass);
@@ -158,19 +160,12 @@ protected static TrainSeat seatAllocation(Map<String, Object> ticket, String sea
     // Populate TrainSeat as in your prior code
     int trainNumber = bestSeat.getInteger("trainNumber");
     String trainName = bestSeat.getString("trainName");
-    String startStation = (String) ticket.get("from");
-    String endStation = (String) ticket.get("to");
+    String startStation = (String) ticket.get("startStation");
+    String endStation = (String) ticket.get("endStation");
     LocalDateTime departureTime = (LocalDateTime) ticket.get("departureTime");
     LocalDateTime arrivalTime = (LocalDateTime) ticket.get("arrivalTime");
-    LocalDate date;
-    Object dateObj = bestSeat.get("date");
-    if (dateObj instanceof LocalDate) {
-        date = (LocalDate) dateObj;
-    } else if (dateObj instanceof String) {
-        date = LocalDate.parse((String) dateObj);
-    } else {
-        date = LocalDate.now();
-    }
+    String dateStr = (String) ticket.get("date");
+    LocalDate date = LocalDate.parse(dateStr);
     String finalCoach = bestSeat.getString("coach");
     String finalBerth = bestSeat.getString("berth");
     int seatNumber = bestSeat.getInteger("seatNumber");

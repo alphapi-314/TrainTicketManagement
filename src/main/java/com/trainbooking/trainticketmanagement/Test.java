@@ -10,7 +10,28 @@ import java.util.*;
 
 public class Test implements DbConnection {
     public static void main(String[] args) {
-        Test.addSeats();
+        test();
+    }
+
+    static void s(){
+        String startStation = "DEHRADUN";
+        String endStation = "RAMPUR";
+        LocalDate date = LocalDate.parse("2025-05-28");
+        int trainNumber = 14120;
+        LocalDateTime departureTime = LocalDateTime.parse("2025-05-28T22:00:00");
+        LocalDateTime arrivalTime = LocalDateTime.parse("2025-05-29T03:15:00");
+        String trainName = "DDN KGM EXP";
+        String seatClass = "2AC";
+        String name = "TestUser";
+        int age = 30;
+        String gender = "male";
+        String coach = "A1";
+        String berth = "Lower";
+        int seatNumber = 1;
+
+        TrainSeat s = new TrainSeat(trainNumber, trainName, startStation, endStation,
+                departureTime, arrivalTime, date, seatClass, coach, berth, seatNumber);
+        TrainSeat.bookSeat(s);
     }
 
     void c(){
@@ -142,20 +163,20 @@ public class Test implements DbConnection {
 public static void test() {
     String startStation = "DEHRADUN";
     String endStation = "RAMPUR";
-    LocalDate date = LocalDate.parse("2025-05-29");
+    LocalDate date = LocalDate.parse("2025-05-28");
     int trainNumber = 14120;
-    LocalDateTime departureTime = LocalDateTime.parse("2025-05-29T22:00:00");
-    LocalDateTime arrivalTime = LocalDateTime.parse("2025-05-30T03:15:00");
+    LocalDateTime departureTime = LocalDateTime.parse("2025-05-28T22:00:00");
+    LocalDateTime arrivalTime = LocalDateTime.parse("2025-05-29T03:15:00");
     String trainName = "DDN KGM EXP";
-    String seatClass = "3AC";
+    String seatClass = "2AC";
     String name = "TestUser";
     int age = 30;
     String gender = "male";
-    String coach = "B2";
-    String berth = "Upper";
+    String coach = "A1";
+    String berth = "Lower";
 
     // Call the method to book ticket
-    List<Object> bookingResult = UserFunctions.bookTicket(
+    List<Object> bookingResult = Ticket.bookTicket(
         startStation,
         endStation,
         date,
