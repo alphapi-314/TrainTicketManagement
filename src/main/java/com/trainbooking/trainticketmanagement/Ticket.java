@@ -179,6 +179,8 @@ class Ticket extends TrainSeat implements DbConnection {
             list.add(response);
             return list;
         }
+        LocalDate date = (LocalDate) ticket.get("date");
+        ticket.put("date", date.toString());
         TrainSeat newSeat = seatAllocation(ticket, seatClass, coach, berth);
         if (newSeat == null) {
             response = "No seat is available for the given seat class and coach";
