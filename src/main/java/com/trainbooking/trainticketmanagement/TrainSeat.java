@@ -182,6 +182,8 @@ private static List<Document> freeSeats(Map<String, Object> details, String seat
     String endStation = (String) details.get("endStation");
     String date = (String) details.get("date");
 
+    System.out.println(startStation + " " + endStation + " " + date + " " + trainNumber + " " + seatClass);
+
     List<Document> seats = seatCollection.find(
             Filters.and(
                     Filters.eq("trainNumber", trainNumber),
