@@ -229,10 +229,13 @@ class Ticket extends TrainSeat implements DbConnection {
                 response = "No seat is available for the given Date and Seat Class";
             } else {
                 cancelTicket(pnr);
+                List<Map<String, Object>> tr = getTrains(newSeat.startStation, newSeat.endStation, date);
+                Object d = tr.getFirst().get("departureTime");
+                Object a = tr.getFirst().get("arrivalTime");
                 Bson updates = Updates.combine(
                         Updates.set("date", date),
-                        Updates.set("departureTime", newSeat.departureTime),
-                        Updates.set("arrivalTime", newSeat.arrivalTime),
+                        Updates.set("departureTime", d),
+                        Updates.set("arrivalTime", a),
                         Updates.set("seatClass", newSeat.seatClass),
                         Updates.set("coach", newSeat.coach),
                         Updates.set("berth", newSeat.berth),
